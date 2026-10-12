@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звіт з лабораторної роботи — Обробка зображень</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292f;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Навігація / Зміст */
+        nav {
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: #0969da;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Секції */
+        section {
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1F2328;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            border-bottom: 1px solid #hsla(210,18%,87%,1);
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.3rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            color: #1F2328;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+        .title-block {
+            text-align: center;
+            border: 1px solid #d0d7de;
+            padding: 2.5rem 1.5rem;
+            border-radius: 6px;
+            background-color: #f6f8fa;
+            margin-bottom: 2.5rem;
+        }
+
+        }
+
+        .title-block h1 {
+            border: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .title-block .meta-info {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f6f8fa;
+            font-weight: 600;
+        }
+
+        /* Лістинг коду */
+        pre {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            background-color: rgba(175,184,193,0.2);
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-size: 0.85em;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        /* Плейсхолдери скріншотів */
+        .img-placeholder {
+            border: 1px dashed #8c959f;
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem 0 2rem 0;
+            color: #57606a;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding-top: 1rem;
+            border-top: 1px solid #d0d7de;
+            font-size: 0.85rem;
+            color: #57606a;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .title-block .meta-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <nav>
+            <ul>
+                <li><a href="#title">Титульний лист</a></li>
+                <li><a href="#task">Завдання</a></li>
+                <li><a href="#description">Хід работы</a></li>
+                <li><a href="#code">Код програми</a></li>
+                <li><a href="#screenshots">Скріншоти</a></li>
+                <li><a href="#conclusions">Висновки</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1. ТИТУЛЬНИЙ ЛИСТ -->
+        <section id="title">
+            <div class="title-block">
+                <p>ЗВІТ</p>
+                <h1>з лабораторної роботи з дисципліни<br>«Комп'ютерна графіка та візуалізація»</h1>
+                <p><strong>Тема:</strong> розробка програми для обробки зображень: конвертація форматів, зміна розміру, перетворення кольорів та корекція колірного балансу.</p>
+
+                <div class="meta-info">
+                    <div>
+                        <strong>Виконав:</strong><br>
+                        Студент гр. ІПЗ-24.10<br>
+                        Пастух С. І.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ЛИСТ ЗАВДАННЯ -->
+        <section id="task">
+            <h1>1. Лист завдання</h1>
+            <p><strong>Тема:</strong> Створення інструменту обробки растрових зображень з використанням GUI-бібліотеки <code>tkinter</code> та інструментів обробки даних <code>NumPy</code>, <code>scikit-image</code>, <code>matplotlib</code>.</p>
+            <p><strong>Мета:</strong> Практичне освоєння методів маніпулювання колірними каналами, геометрією та форматами растрових зображень у Python.</p>
+            
+            <h3>Перелік завдань:</h3>
+            <ol>
+                <li>Розробити графічний інтерфейс користувача з вкладками для доступу до функціональних модулів.</li>
+                <li>Реалізувати завантаження файлу зображення через стандартний діалог файлової системи.</li>
+                <li>Реалізувати функцію конвертації між форматами (<code>tiff</code>, <code>bmp</code>, <code>gif</code>, <code>png</code>, <code>jpg</code>, <code>jpeg</code>) з урахуванням наявності альфа-каналу (прозорості).</li>
+                <li>Реалізувати масштабування зображення:
+                    <ul>
+                        <li>За точними значеннями ширини та висоти.</li>
+                        <li>Пропорційно за вказаною висотою.</li>
+                        <li>Пропорційно за вказаною шириною.</li>
+                    </ul>
+                </li>
+                <li>Реалізувати заміни конкретного RGB-кольору на новий колір.</li>
+                <li>Реалізувати корекцію колірного балансу шляхом поканального множення на коефіцієнти R, G, B з обмеженням [0, 255].</li>
+                <li>Забезпечити попередній перегляд обробленого зображення та відображення розмірностей масиву пікселів.</li>
+                <li>Додати можливість збереження обробленого файлу.</li>
+            </ol>
+        </section>
+
+        <!-- 3. ОПИС ХОДУ ВИКОНАННЯ ЗАВДАНЬ -->
+       <section id="description">
+    <h1>2. Опис ходу виконання завдань</h1>
+
+    <h3>Хід розробки та функціональні блоки:</h3>
+    <ol>
+        <li><strong>show_and_save_gui</strong> — метод візуалізації та збереження. Очищує контейнер перегляду, будує полотно Matplotlib (FigureCanvasTkAgg), відображає розмірності масиву (shape, size) та викликає модальне вікно підтвердження.</li>
+        <li><strong>image_format_conversion</strong> — функція конвертації форматів. Перевіряє кількість каналів та видаляє альфа-канал (converted_array[:, :, :3]) для форматів без підтримки прозорості.</li>
+        <li><strong>image_size_conversion_*</strong> — комплекс методів масштабування. Автоматично обчислює пропорції сторін (new_width = (w / h) * new_height) та виконує інтерполяцію через skimage.transform.resize.</li>
+        <li><strong>image_change</strong> — функція точкової заміни кольорів. Застосовує маскування масивів NumPy (np.all(img[:, :, :3] == target, axis=-1)) для швидкої заміни цінних RGB-пікселів.</li>
+        <li><strong>color_balance_corection</strong> — метод корекції колірного балансу. Переводить масив у float32, множить канали на коефіцієнти, обрізає значення через np.clip() та приводить до типу uint8.</li>
+    </ol>
+
+    <h3>Використані бібліотеки та модулі:</h3>
+    <ol>
+        <li><strong>tkinter / ttk</strong> — базові модулі GUI. Відповідають за побудову елементів інтерфейсу (вікна, кнопки, поля введення) та організацію вкладок Notebook.</li>
+        <li><strong>filedialog / messagebox</strong> — засоби системної взаємодії. Реалізують вибір файлів через провідник (askopenfilename) та виведення модальних сповіщень.</li>
+        <li><strong>numpy</strong> — бібліотека векторних обчислень. Забезпечує роботу з растровими масивами, створення логічних масок та конвертацію типів даних.</li>
+        <li><strong>skimage (scikit-image)</strong> — інструмент обробки зображень. Забезпечує читання (imread), збереження (imsave) та якісне масштабування масивів.</li>
+        <li><strong>matplotlib</strong> — засіб рендерингу та інтеграції. Створює об'єкти візуалізації зображень та вбудовує полотно у віджети Tkinter через FigureCanvasTkAgg.</li>
+    </ol>
+</section>
+
+        <!-- 4. ЛІСТИНГ ПРОГРАМИ -->
+        <section id="code">
+            <h1>3. Лістинг програми</h1>
+            <pre><code>import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from skimage.io import imread, imsave
+from skimage.transform import resize
+
+def show_and_save_gui(image_array: np.ndarray, file_name: str, canvas_frame, info_label, save: bool = True):
+    for widget in canvas_frame.winfo_children():
+        widget.destroy()
+
+    # Отрисовка изображения
+    fig, ax = plt.subplots(figsize=(5, 4))
+    ax.imshow(image_array)
+    ax.axis("off")
+    ax.set_title("Preview")
+
+    canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+    plt.close(fig)
+
+    info_label.config(text=f"Shape: {image_array.shape} | Total elements: {image_array.size}")
+
+    if save and file_name:
+        if messagebox.askyesno("Save Image", f"Save image as:\n{file_name}?"):
+            imsave(file_name, image_array)
+            messagebox.showinfo("Success", f"Saved as: {file_name}")
+
+def image_format_conversion(image_name: str, conversion_format: str, canvas_frame, info_label):
+    conversion_format = conversion_format.lstrip(".").lower()
+    new_file_name = f"{image_name.rsplit('.', 1)[0]}_new.{conversion_format}"
+
+    image_array = imread(image_name)
+    converted_array = image_array.copy()
+
+    if converted_array.ndim == 3 and converted_array.shape[2] == 4:
+        if conversion_format not in ["png", "gif"]:
+            converted_array = converted_array[:, :, :3]
+
+    show_and_save_gui(converted_array, new_file_name, canvas_frame, info_label)
+
+def image_size_conversion(image_name: str, width: int, height: int, canvas_frame, info_label):
+    image_array = imread(image_name)
+    target_h = max(1, int(height))
+    target_w = max(1, int(width))
+    resized_array = resize(image_array, (target_h, target_w), preserve_range=True, anti_aliasing=False).astype(np.uint8)
+    new_file_name = f"{image_name.rsplit('.', 1)[0]}_resized.{image_name.rsplit('.', 1)[1]}"
+
+    show_and_save_gui(resized_array, new_file_name, canvas_frame, info_label)
+
+def image_size_conversion_height(image_name: str, height: float, canvas_frame, info_label):
+    image_array = imread(image_name)
+    h, w = image_array.shape[:2]
+    new_height = max(1, int(height))
+    new_width = max(1, int((w / h) * new_height))
+    
+    resized_array = resize(image_array, (new_height, new_width), preserve_range=True, anti_aliasing=False).astype(np.uint8)
+    new_file_name = f"{image_name.rsplit('.', 1)[0]}_resized.{image_name.rsplit('.', 1)[1]}"
+
+    show_and_save_gui(resized_array, new_file_name, canvas_frame, info_label)
+
+def image_size_conversion_width(image_name: str, width: float, canvas_frame, info_label):
+    image_array = imread(image_name)
+    h, w = image_array.shape[:2]
+    new_width = max(1, int(width))
+    new_height = max(1, int((h / w) * new_width))
+    
+    resized_array = resize(image_array, (new_height, new_width), preserve_range=True, anti_aliasing=False).astype(np.uint8)
+    new_file_name = f"{image_name.rsplit('.', 1)[0]}_resized.{image_name.rsplit('.', 1)[1]}"
+
+    show_and_save_gui(resized_array, new_file_name, canvas_frame, info_label)
+
+def image_change(image_name: str, target_color: np.ndarray, replacement_color: np.ndarray, canvas_frame, info_label):
+    base_name, ext = image_name.rsplit(".", 1)
+    new_file_name = f"{base_name}_color_change.{ext}"
+
+    img = imread(image_name)
+    img_modified = img.copy()
+
+    target = np.array(target_color, dtype=img.dtype)
+    replacement = np.array(replacement_color, dtype=img.dtype)
+
+    mask = np.all(img_modified[:, :, :3] == target, axis=-1)
+    img_modified[mask, :3] = replacement
+
+    show_and_save_gui(img_modified, new_file_name, canvas_frame, info_label)
+
+def color_balance_corection(image_name: str, r: float, g: float, b: float, canvas_frame, info_label):
+    base_name, ext = image_name.rsplit(".", 1)
+    new_file_name = f"{base_name}_color_balance.{ext}"
+
+    image_array = imread(image_name).astype(np.float32)
+
+    if image_array.ndim == 3:
+        image_array[:, :, 0] *= r
+        image_array[:, :, 1] *= g
+        image_array[:, :, 2] *= b
+        image_array = np.clip(image_array, 0, 255).astype(np.uint8)
+
+    show_and_save_gui(image_array, new_file_name, canvas_frame, info_label)
+
+class App:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Image Processing Tool")
+        self.root.geometry("850x600")
+
+        self.image_path = ""
+
+        file_frame = ttk.Frame(root, padding=10)
+        file_frame.pack(fill=tk.X)
+        
+        ttk.Button(file_frame, text="Select File", command=self.select_file).pack(side=tk.LEFT)
+        self.lbl_file = ttk.Label(file_frame, text="No file selected", padding=(10, 0))
+        self.lbl_file.pack(side=tk.LEFT)
+
+        main_frame = ttk.Frame(root, padding=10)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+
+        self.notebook = ttk.Notebook(main_frame)
+        self.notebook.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 10))
+
+        preview_frame = ttk.LabelFrame(main_frame, text="Preview", padding=10)
+        preview_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+        self.lbl_info = ttk.Label(preview_frame, text="")
+        self.lbl_info.pack(anchor=tk.W)
+
+        self.canvas_frame = ttk.Frame(preview_frame)
+        self.canvas_frame.pack(fill=tk.BOTH, expand=True)
+
+        self._init_format_tab()
+        self._init_size_tab()
+        self._init_color_tab()
+        self._init_balance_tab()
+
+    def select_file(self):
+        path = filedialog.askopenfilename(
+            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp *.tiff *.gif"), ("All files", "*.*")]
+        )
+        if path:
+            try:
+                self.image_path = path
+                self.lbl_file.config(text=path)
+                image_array = imread(path)
+                show_and_save_gui(image_array, path, self.canvas_frame, self.lbl_info, save=False)
+            except Exception as e:
+                messagebox.showerror("Error", f"Failed to open image:\n{e}")
+
+    def _check_file(self):
+        if not self.image_path:
+            messagebox.showerror("Error", "Please select a file first!")
+            return False
+        return True
+
+    def _init_format_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text="1. Format")
+
+        ttk.Label(tab, text="Target format:").pack(anchor=tk.W, pady=5)
+        self.ent_format = ttk.Entry(tab)
+        self.ent_format.pack(fill=tk.X, pady=5)
+
+        ttk.Button(tab, text="Run", command=self._run_format).pack(pady=10)
+
+    def _run_format(self):
+        if not self._check_file(): return
+        fmt = self.ent_format.get().strip()
+        valid_formats = ["tiff", "bmp", "gif", "png", "jpg", "jpeg"]
+        if fmt.lower() not in valid_formats:
+            messagebox.showerror("Error", f"Invalid format! Allowed: {', '.join(valid_formats)}")
+            return
+        image_format_conversion(self.image_path, fmt, self.canvas_frame, self.lbl_info)
+
+    def _init_size_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text="2. Size")
+
+        ttk.Label(tab, text="Height (0 for width only):").pack(anchor=tk.W)
+        self.ent_h = ttk.Entry(tab)
+        self.ent_h.insert(0, "0")
+        self.ent_h.pack(fill=tk.X, pady=5)
+
+        ttk.Label(tab, text="Width (0 for height only):").pack(anchor=tk.W)
+        self.ent_w = ttk.Entry(tab)
+        self.ent_w.insert(0, "0")
+        self.ent_w.pack(fill=tk.X, pady=5)
+
+        ttk.Button(tab, text="Run", command=self._run_size).pack(pady=10)
+
+    def _run_size(self):
+        if not self._check_file(): return
+        try:
+            h = float(self.ent_h.get())
+            w = float(self.ent_w.get())
+        except ValueError:
+            messagebox.showerror("Error", "Enter numeric values!")
+            return
+
+        if h != 0 and w != 0:
+            image_size_conversion(self.image_path, int(w), int(h), self.canvas_frame, self.lbl_info)
+        elif h == 0 and w != 0:
+            image_size_conversion_width(self.image_path, w, self.canvas_frame, self.lbl_info)
+        elif h != 0 and w == 0:
+            image_size_conversion_height(self.image_path, h, self.canvas_frame, self.lbl_info)
+        else:
+            messagebox.showwarning("Warning", "Write at least one parameter!")
+
+    def _init_color_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text="3. Color")
+
+        ttk.Label(tab, text="Original RGB (e.g. 255 0 0):").pack(anchor=tk.W)
+        self.ent_target = ttk.Entry(tab)
+        self.ent_target.insert(0, "255 0 0")
+        self.ent_target.pack(fill=tk.X, pady=5)
+
+        ttk.Label(tab, text="New RGB (e.g. 0 255 0):").pack(anchor=tk.W)
+        self.ent_replace = ttk.Entry(tab)
+        self.ent_replace.insert(0, "0 255 0")
+        self.ent_replace.pack(fill=tk.X, pady=5)
+
+        ttk.Button(tab, text="Run", command=self._run_color).pack(pady=10)
+
+    def _run_color(self):
+        if not self._check_file(): return
+        try:
+            target = np.array(self.ent_target.get().split(), dtype=int)
+            replacement = np.array(self.ent_replace.get().split(), dtype=int)
+        except ValueError:
+            messagebox.showerror("Error", "Invalid RGB format!")
+            return
+        image_change(self.image_path, target, replacement, self.canvas_frame, self.lbl_info)
+
+    def _init_balance_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text="4. Balance")
+
+        ttk.Label(tab, text="Red factor (e.g. 1.2):").pack(anchor=tk.W)
+        self.ent_r = ttk.Entry(tab)
+        self.ent_r.insert(0, "1.0")
+        self.ent_r.pack(fill=tk.X, pady=2)
+
+        ttk.Label(tab, text="Green factor (e.g. 1.0):").pack(anchor=tk.W)
+        self.ent_g = ttk.Entry(tab)
+        self.ent_g.insert(0, "1.0")
+        self.ent_g.pack(fill=tk.X, pady=2)
+
+        ttk.Label(tab, text="Blue factor (e.g. 0.8):").pack(anchor=tk.W)
+        self.ent_b = ttk.Entry(tab)
+        self.ent_b.insert(0, "1.0")
+        self.ent_b.pack(fill=tk.X, pady=2)
+
+        ttk.Button(tab, text="Run", command=self._run_balance).pack(pady=10)
+
+    def _run_balance(self):
+        if not self._check_file(): return
+        try:
+            r = float(self.ent_r.get())
+            g = float(self.ent_g.get())
+            b = float(self.ent_b.get())
+        except ValueError:
+            messagebox.showerror("Error", "Enter numeric values!")
+            return
+        color_balance_corection(self.image_path, r, g, b, self.canvas_frame, self.lbl_info)
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
+</code></pre>
+        </section>
+
+        <!-- 5. СКРІНШОТИ РЕЗУЛЬТАТІВ -->
+        <section id="screenshots">
+            <h1>4. Результати виконання роботи</h1>
+
+            <p><strong>Рис. 1.</strong> Головне вікно програми після вибору вихідного файлу</p>
+            
+                <img src="screen1.png" alt="Головне вікно">
+
+            <p><strong>Рис. 2.</strong> Конвертація формату зображення (вкладка «1. Format»)</p>
+                <img src="screen2.1.png" alt="Результат зміни розміру">
+
+            <p><strong>Рис. 3.</strong> Зміна розмірів із збереженням пропорцій (вкладка «2. Size»)</p>
+                <img src="screen2.png" alt="Налаштування розміру">
+
+
+            <p><strong>Рис. 4.</strong> Результат заміни RGB-кольору (вкладка «3. Color»)</p>
+                <img src="screen4.png" alt="Заміна кольору">
+
+            <p><strong>Рис. 5.</strong> Корекція колірного балансу каналів R, G, B (вкладка «4. Balance»)</p>
+                <img src="screen3.png" alt="Колірний баланс">
+
+            <p><strong>Рис. 6.</strong> Діалогове вікно підтвердження збереження обробленого файлу</p>
+                <img src="screen5.png" alt="Вікно збереження">
+        </section>
+
+        <!-- 6. ВИСНОВКИ -->
+        <section id="conclusions">
+            <h1>5. Висновки</h1>
+            <p>Під час виконання лабораторної роботи було створено програмний інструмент на мові Python для базової обробки растрових зображень.</p>
+            <p>У ході роботи розроблено графічний інтерфейс користувача з використанням бібліотеки <code>tkinter</code>, реалізовано алгоритми конвертації форматів файлів з урахуванням альфа-каналу, пропорційне масштабування зображень та маскування кольорів засобами <code>NumPy</code> та <code>scikit-image</code>.</p>
+        </section>
+
+
+    </div>
+
+</body>
+</html>
