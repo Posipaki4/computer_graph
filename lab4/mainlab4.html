@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звіт з лабораторної роботи — Обробка та аналіз кольорових зображень</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292f;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        nav {
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: #0969da;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1F2328;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.3rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            color: #1F2328;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        .title-block {
+            text-align: center;
+            border: 1px solid #d0d7de;
+            padding: 2.5rem 1.5rem;
+            border-radius: 6px;
+            background-color: #f6f8fa;
+            margin-bottom: 2.5rem;
+        }
+
+        .title-block h1 {
+            border: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .title-block .meta-info {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin: 0.5rem 0 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .title-block .meta-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <nav>
+            <ul>
+                <li><a href="#title">Титульний лист</a></li>
+                <li><a href="#task">Завдання</a></li>
+                <li><a href="#description">Хід роботи</a></li>
+                <li><a href="#code">Код програми</a></li>
+                <li><a href="#screenshots">Скріншоти</a></li>
+                <li><a href="#conclusions">Висновки</a></li>
+            </ul>
+        </nav>
+
+        <section id="title">
+            <div class="title-block">
+                <p>ЗВІТ</p>
+                <h1>з лабораторної роботи з дисципліни<br>«Комп'ютерна графіка та візуалізація»</h1>
+                <p>Тема: робота з растровими зображеннями, їхніми колірними характеристиками та гістограмами.</p>
+
+                <div class="meta-info">
+                    <div>
+                        Виконав:<br>
+                        Студент гр. ІПЗ-24.10<br>
+                        Пастух С. І.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="task">
+            <h1>1. Лист завдання</h1>
+            <p>Тема: робота з растровими зображеннями, їхніми колірними характеристиками та гістограмами.</p>
+            <p>Мета: ознайомитися з методами аналізу та обробки кольорових характеристик растрових зображень: отриманням і аналізом матриці яскравості (люмінансу), побудовою та дослідженням гістограми яскравості, реалізацією порогової бінаризації (ручний поріг та автоматичний поріг методом Отсу), знебарвленням та інверсією кольорів (негатив) за допомогою мови програмування Python.</p>
+            
+            <h3>Перелік завдань:</h3>
+            <ol>
+                <li>Реалізувати завантаження кольорового растрового зображення та виведення його характеристик (роздільна здатність, діапазон і середнє значення інтенсивності).</li>
+                <li>Обчислити повну числову матрицю значень яскравості за формулою Y = 0.299*R + 0.587*G + 0.114*B з виведенням всієї матриці у текстове поле зі скролінгом, побудовою кольорової теплової карти (Heatmap) та експортом у CSV.</li>
+                <li>Побудувати гістограму розподілу яскравості Y (256 бінів) з налаштуванням осей координат.</li>
+                <li>Реалізувати алгоритми бінаризації: за фіксованим ручним порогом та з автоматичним визначенням оптимального порогу методом Отсу.</li>
+                <li>Реалізувати перетворення у напівтонове зображення (градації сірого) із супутньою гістограмою та створення негативу за формулою NewY = 255 - OldY.</li>
+            </ol>
+        </section>
+
+        <section id="description">
+            <h1>2. Опис ходу виконання завдань</h1>
+
+            <h3>Хід розробки та функціональні блоки:</h3>
+            <ol>
+                <li>compute_luminance_matrix — обчислення матриці яскравості Y на основі лінійної комбінації колірних каналів R, G, B з урахуванням чутливості людського зору.</li>
+                <li>show_custom_fig — функція монтування графіків та діаграм бібліотеки Matplotlib у полотно графічного інтерфейсу Tkinter.</li>
+                <li>show_and_save_gui — універсальна функція виведення графічного результату з інформаційним підписом та діалоговим вікном збереження у файл.</li>
+                <li>_init_matrix_tab та _update_matrix_preview — блок роботи з матрицею яскравості: виведення повної числової матриці для всієї фотографії у текстове поле з вертикальною та горизонтальною смугами прокручування, побудова теплової карти (Heatmap) та експорт значень у CSV.</li>
+                <li>_plot_luminance_hist — побудова 256-бінової гістограми розподілу значень яскравості зображення.</li>
+                <li>_run_binarization та _run_otsu_binarization — бінаризація зображення за вказаним числовим порогом та автоматичний пошук порогу методом максимізації міжкласової дисперсії Отсу.</li>
+                <li>_run_grayscale та _run_negative — формування монохромного зображення та обчислення негативу інверсією колірного діапазону.</li>
+            </ol>
+
+            <h3>Використані бібліотеки та модулі:</h3>
+            <ol>
+                <li>tkinter / ttk — побудова графічного інтерфейсу (вкладки Notebook, текстові поля Text зі скролінгом, повзунки Scale, кнопки).</li>
+                <li>filedialog / messagebox — інтерактивний вибір вхідного графічного файлу, експорт матриці в CSV та системні діалоги.</li>
+                <li>numpy — векторні обчислення над пікселями, розрахунок формули люмінансу, порогова сегментація матриць та розрахунок статистичних параметрів.</li>
+                <li>skimage (scikit-image) — зчитування та збереження графічних файлів різних форматів.</li>
+                <li>matplotlib — побудова теплових карт розподілу яскравості та статистичних гістограм.</li>
+            </ol>
+        </section>
+
+        <section id="code">
+            <h1>3. Лістинг програми</h1>
+            <pre><code>import os
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from skimage.io import imread, imsave
+def compute_luminance_matrix(img: np.ndarray) -&gt; np.ndarray:
+    if img.ndim == 2:
+        return img.astype(np.float32)
+    rgb = img[:, :, :3].astype(np.float32)
+    y = 0.299 * rgb[:, :, 0] + 0.587 * rgb[:, :, 1] + 0.114 * rgb[:, :, 2]
+    return y
+def show_custom_fig(fig, canvas_frame):
+    for widget in canvas_frame.winfo_children():
+        widget.destroy()
+    canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+    plt.close(fig)
+def show_and_save_gui(image_array: np.ndarray, file_name: str, canvas_frame, info_label, save: bool = True):
+    for widget in canvas_frame.winfo_children():
+        widget.destroy()
+    fig, ax = plt.subplots(figsize=(5, 4))
+    if image_array.ndim == 2:
+        ax.imshow(image_array, cmap=&quot;gray&quot;, vmin=0, vmax=255)
+    else:
+        ax.imshow(image_array)
+    ax.axis(&quot;off&quot;)
+    ax.set_title(&quot;Preview&quot;)
+    canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+    plt.close(fig)
+    info_label.config(text=f&quot;Shape: {image_array.shape} | Total elements: {image_array.size}&quot;)
+    if save and file_name:
+        if messagebox.askyesno(&quot;Save Image&quot;, f&quot;Save image as:\n{file_name}?&quot;):
+            try:
+                imsave(file_name, image_array)
+                messagebox.showinfo(&quot;Success&quot;, f&quot;Saved as: {file_name}&quot;)
+            except Exception as e:
+                messagebox.showerror(&quot;Error&quot;, f&quot;Failed to save image:\n{e}&quot;)
+class AppLab4:
+    def __init__(self, root):
+        self.root = root
+        self.root.title(&quot;Лабораторна робота №4 — Обробка та аналіз кольорових зображень&quot;)
+        self.root.geometry(&quot;1060x720&quot;)
+        self.image_path = &quot;&quot;
+        self.img_array = None
+        self.y_matrix = None
+        file_frame = ttk.Frame(root, padding=10)
+        file_frame.pack(fill=tk.X)
+        ttk.Button(file_frame, text=&quot;Вибрати зображення&quot;, command=self.select_file).pack(side=tk.LEFT)
+        self.lbl_file = ttk.Label(file_frame, text=&quot;Файл не вибрано&quot;, padding=(10, 0))
+        self.lbl_file.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        main_frame = ttk.Frame(root, padding=10)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        self.notebook = ttk.Notebook(main_frame)
+        self.notebook.pack(side=tk.LEFT, fill=tk.BOTH, padx=(0, 10), expand=False)
+        preview_frame = ttk.LabelFrame(main_frame, text=&quot;Візуалізація та результати&quot;, padding=10)
+        preview_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.lbl_info = ttk.Label(preview_frame, text=&quot;&quot;)
+        self.lbl_info.pack(anchor=tk.W, pady=(0, 5))
+        self.canvas_frame = ttk.Frame(preview_frame)
+        self.canvas_frame.pack(fill=tk.BOTH, expand=True)
+        self._init_orig_tab()
+        self._init_matrix_tab()
+        self._init_hist_tab()
+        self._init_transform_tab()
+        self.notebook.bind(&quot;&lt;&lt;NotebookTabChanged&gt;&gt;&quot;, self._on_tab_change)
+    def _on_tab_change(self, event):
+        if self.y_matrix is None: return
+        try:
+            tab_idx = self.notebook.index(self.notebook.select())
+            if tab_idx == 1:
+                self._show_matrix_heatmap()
+        except Exception:
+            pass
+    def select_file(self):
+        path = filedialog.askopenfilename(
+            filetypes=[(&quot;Image files&quot;, &quot;*.jpg *.jpeg *.png *.bmp *.tiff *.gif&quot;), (&quot;All files&quot;, &quot;*.*&quot;)]
+        )
+        if path:
+            try:
+                self.image_path = path
+                self.lbl_file.config(text=path)
+                self.img_array = imread(path)
+                self.y_matrix = compute_luminance_matrix(self.img_array)
+                show_and_save_gui(self.img_array, path, self.canvas_frame, self.lbl_info, save=False)
+                self._update_matrix_preview()
+            except Exception as e:
+                messagebox.showerror(&quot;Помилка&quot;, f&quot;Не вдалося відкрити зображення:\n{e}&quot;)
+    def _check_file(self):
+        if self.img_array is None or self.y_matrix is None:
+            messagebox.showerror(&quot;Помилка&quot;, &quot;Спочатку оберіть зображення!&quot;)
+            return False
+        return True
+    def _init_orig_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;1. Первинне&quot;)
+        ttk.Label(tab, text=&quot;Завдання 1: Виведення первинного кольорового зображення&quot;, wraplength=220, font=(&quot;Arial&quot;, 9, &quot;bold&quot;)).pack(anchor=tk.W, pady=5)
+        ttk.Button(tab, text=&quot;Показати первинне зображення&quot;, command=self._show_original).pack(fill=tk.X, pady=10)
+        self.txt_stats = tk.Text(tab, height=12, width=32, wrap=tk.WORD)
+        self.txt_stats.pack(fill=tk.BOTH, expand=True, pady=5)
+    def _show_original(self):
+        if not self._check_file(): return
+        show_and_save_gui(self.img_array, self.image_path, self.canvas_frame, self.lbl_info, save=False)
+        h, w = self.img_array.shape[:2]
+        channels = self.img_array.shape[2] if self.img_array.ndim == 3 else 1
+        stats_text = (
+            f&quot;--- Характеристики ---\n&quot;
+            f&quot;Шлях: {os.path.basename(self.image_path)}\n&quot;
+            f&quot;Роздільна здатність: {w}x{h}\n&quot;
+            f&quot;Кількість каналів: {channels}\n&quot;
+            f&quot;Тип даних: {self.img_array.dtype}\n&quot;
+            f&quot;Мін. значення: {np.min(self.img_array)}\n&quot;
+            f&quot;Макс. значення: {np.max(self.img_array)}\n&quot;
+            f&quot;Сер. значення: {np.mean(self.img_array):.2f}\n&quot;
+            f&quot;Сер. яскравість Y: {np.mean(self.y_matrix):.2f}\n&quot;
+        )
+        self.txt_stats.delete(&quot;1.0&quot;, tk.END)
+        self.txt_stats.insert(tk.END, stats_text)
+    def _init_matrix_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;2. Матриця яскравості&quot;)
+        ttk.Label(tab, text=&quot;Формула: Y = 0.299*R + 0.587*G + 0.114*B&quot;, wraplength=220).pack(anchor=tk.W, pady=2)
+        ttk.Button(tab, text=&quot;Візуалізувати теплову карту (Heatmap)&quot;, command=self._show_matrix_heatmap).pack(fill=tk.X, pady=5)
+        ttk.Label(tab, text=&quot;Числові значення матриці яскравості (уся фотка):&quot;).pack(anchor=tk.W, pady=(5, 2))
+        txt_frame = ttk.Frame(tab)
+        txt_frame.pack(fill=tk.BOTH, expand=True, pady=2)
+        v_scroll = ttk.Scrollbar(txt_frame, orient=tk.VERTICAL)
+        v_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        h_scroll = ttk.Scrollbar(txt_frame, orient=tk.HORIZONTAL)
+        h_scroll.pack(side=tk.BOTTOM, fill=tk.X)
+        self.txt_matrix = tk.Text(
+            txt_frame,
+            wrap=tk.NONE,
+            xscrollcommand=h_scroll.set,
+            yscrollcommand=v_scroll.set,
+            font=(&quot;Consolas&quot;, 8)
+        )
+        self.txt_matrix.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        v_scroll.config(command=self.txt_matrix.yview)
+        h_scroll.config(command=self.txt_matrix.xview)
+        ttk.Button(tab, text=&quot;Експорт матриці в CSV...&quot;, command=self._export_matrix_csv).pack(fill=tk.X, pady=5)
+    def _update_matrix_preview(self):
+        if self.y_matrix is None: return
+        h, w = self.y_matrix.shape
+        text_rep = f&quot;Повна матриця значень яскравості Y ({h}x{w}):\n&quot;
+        lines = [&quot; &quot;.join(f&quot;{self.y_matrix[r, c]:5.1f}&quot; for c in range(w)) for r in range(h)]
+        text_rep += &quot;\n&quot;.join(lines)
+        self.txt_matrix.delete(&quot;1.0&quot;, tk.END)
+        self.txt_matrix.insert(tk.END, text_rep)
+    def _show_matrix_heatmap(self):
+        if not self._check_file(): return
+        fig, ax = plt.subplots(figsize=(6, 4.5))
+        cax = ax.imshow(self.y_matrix, cmap=&quot;viridis&quot;)
+        fig.colorbar(cax, ax=ax, label=&quot;Яскравість (Luminance Y)&quot;)
+        ax.set_title(&quot;Матриця значень яскравості зображення&quot;)
+        self.lbl_info.config(text=f&quot;Матриця яскравості: {self.y_matrix.shape} | Сер: {np.mean(self.y_matrix):.1f} | Мін: {np.min(self.y_matrix):.1f} | Макс: {np.max(self.y_matrix):.1f}&quot;)
+        show_custom_fig(fig, self.canvas_frame)
+    def _export_matrix_csv(self):
+        if not self._check_file(): return
+        out_path = filedialog.asksaveasfilename(
+            defaultextension=&quot;.csv&quot;,
+            filetypes=[(&quot;CSV files&quot;, &quot;*.csv&quot;), (&quot;Text files&quot;, &quot;*.txt&quot;)]
+        )
+        if out_path:
+            try:
+                np.savetxt(out_path, self.y_matrix, fmt=&quot;%.2f&quot;, delimiter=&quot;,&quot;)
+                messagebox.showinfo(&quot;Успіх&quot;, f&quot;Матрицю яскравості експортовано в:\n{out_path}&quot;)
+            except Exception as e:
+                messagebox.showerror(&quot;Помилка&quot;, f&quot;Не вдалося зберегти матрицю:\n{e}&quot;)
+    def _init_hist_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;3. Гістограма&quot;)
+        ttk.Label(tab, text=&quot;Побудова гістограми яскравості&quot;, wraplength=220).pack(anchor=tk.W, pady=5)
+        ttk.Button(tab, text=&quot;Гістограма яскравості (Luminance Y)&quot;, command=self._plot_luminance_hist).pack(fill=tk.X, pady=5)
+    def _plot_luminance_hist(self):
+        if not self._check_file(): return
+        fig, ax = plt.subplots(figsize=(6, 4))
+        y_vals = self.y_matrix.ravel()
+        ax.hist(y_vals, bins=256, range=(0, 256), color=&quot;black&quot;, alpha=0.75, edgecolor=&quot;none&quot;)
+        ax.set_title(&quot;Гістограма яскравості зображення Y&quot;)
+        ax.set_xlabel(&quot;Значення яскравості (0..255)&quot;)
+        ax.set_ylabel(&quot;Кількість пікселів&quot;)
+        ax.grid(True, linestyle=&quot;--&quot;, alpha=0.5)
+        self.lbl_info.config(text=f&quot;Гістограма яскравості Y (256 бінів) | Середнє: {np.mean(y_vals):.2f}&quot;)
+        show_custom_fig(fig, self.canvas_frame)
+    def _init_transform_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;4. Трансформації&quot;)
+        bin_frame = ttk.LabelFrame(tab, text=&quot;Бінаризація (чорно-біле)&quot;, padding=5)
+        bin_frame.pack(fill=tk.X, pady=5)
+        ttk.Label(bin_frame, text=&quot;Поріг відсікання T (0..255):&quot;).pack(anchor=tk.W)
+        self.scale_thresh = ttk.Scale(bin_frame, from_=0, to=255, value=128)
+        self.scale_thresh.pack(fill=tk.X, pady=2)
+        self.ent_thresh = ttk.Entry(bin_frame)
+        self.ent_thresh.insert(0, &quot;128&quot;)
+        self.ent_thresh.pack(fill=tk.X, pady=2)
+        def sync_th(val):
+            self.ent_thresh.delete(0, tk.END)
+            self.ent_thresh.insert(0, str(int(float(val))))
+        self.scale_thresh.config(command=sync_th)
+        btn_box = ttk.Frame(bin_frame)
+        btn_box.pack(fill=tk.X, pady=5)
+        ttk.Button(btn_box, text=&quot;Бінаризація (поріг)&quot;, command=self._run_binarization).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+        ttk.Button(btn_box, text=&quot;Пошук порогу Отсу&quot;, command=self._run_otsu_binarization).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+        gray_frame = ttk.LabelFrame(tab, text=&quot;Відтінки сірого &amp; Гістограма&quot;, padding=5)
+        gray_frame.pack(fill=tk.X, pady=5)
+        ttk.Button(gray_frame, text=&quot;Перехід до відтінків сірого&quot;, command=self._run_grayscale).pack(fill=tk.X, pady=2)
+        ttk.Button(gray_frame, text=&quot;Сіре зображення + Гістограма&quot;, command=self._run_gray_with_hist).pack(fill=tk.X, pady=2)
+        neg_frame = ttk.LabelFrame(tab, text=&quot;Негатив (NewY = 255 - OldY)&quot;, padding=5)
+        neg_frame.pack(fill=tk.X, pady=5)
+        ttk.Button(neg_frame, text=&quot;Створити негатив зображення&quot;, command=self._run_negative).pack(fill=tk.X, pady=2)
+    def _run_binarization(self):
+        if not self._check_file(): return
+        try:
+            thresh = int(float(self.ent_thresh.get()))
+        except ValueError:
+            messagebox.showerror(&quot;Помилка&quot;, &quot;Введіть ціле число від 0 до 255 для порогу!&quot;)
+            return
+        binary = np.where(self.y_matrix &gt;= thresh, 255, 0).astype(np.uint8)
+        base_name = self.image_path.rsplit(&quot;.&quot;, 1)[0]
+        ext = self.image_path.rsplit(&quot;.&quot;, 1)[1]
+        new_name = f&quot;{base_name}_binary_T{thresh}.{ext}&quot;
+        show_and_save_gui(binary, new_name, self.canvas_frame, self.lbl_info)
+    def _run_otsu_binarization(self):
+        if not self._check_file(): return
+        pixel_counts, _ = np.histogram(self.y_matrix.ravel(), bins=256, range=(0, 256))
+        total_pixels = self.y_matrix.size
+        current_max, best_threshold = 0.0, 0
+        sum_total = np.dot(np.arange(256), pixel_counts)
+        weight_b, sum_b = 0, 0
+        for t in range(256):
+            weight_b += pixel_counts[t]
+            if weight_b == 0: continue
+            weight_f = total_pixels - weight_b
+            if weight_f == 0: break
+            sum_b += t * pixel_counts[t]
+            mean_b = sum_b / weight_b
+            mean_f = (sum_total - sum_b) / weight_f
+            between_variance = weight_b * weight_f * ((mean_b - mean_f) ** 2)
+            if between_variance &gt; current_max:
+                current_max = between_variance
+                best_threshold = t
+        self.scale_thresh.set(best_threshold)
+        self.ent_thresh.delete(0, tk.END)
+        self.ent_thresh.insert(0, str(best_threshold))
+        messagebox.showinfo(&quot;Оптимальний поріг Отсу&quot;, f&quot;Обчислений автоматичний поріг Отсу: T = {best_threshold}&quot;)
+        self._run_binarization()
+    def _run_grayscale(self):
+        if not self._check_file(): return
+        gray = np.clip(self.y_matrix, 0, 255).astype(np.uint8)
+        base_name = self.image_path.rsplit(&quot;.&quot;, 1)[0]
+        ext = self.image_path.rsplit(&quot;.&quot;, 1)[1]
+        new_name = f&quot;{base_name}_grayscale.{ext}&quot;
+        show_and_save_gui(gray, new_name, self.canvas_frame, self.lbl_info)
+    def _run_gray_with_hist(self):
+        if not self._check_file(): return
+        gray = np.clip(self.y_matrix, 0, 255).astype(np.uint8)
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
+        ax1.imshow(gray, cmap=&quot;gray&quot;, vmin=0, vmax=255)
+        ax1.set_title(&quot;Відтінки сірого&quot;)
+        ax1.axis(&quot;off&quot;)
+        ax2.hist(gray.ravel(), bins=256, range=(0, 256), color=&quot;dimgray&quot;, edgecolor=&quot;none&quot;)
+        ax2.set_title(&quot;Гістограма сірого зображення&quot;)
+        ax2.set_xlabel(&quot;Рівень яскравості (0..255)&quot;)
+        ax2.grid(True, linestyle=&quot;--&quot;, alpha=0.5)
+        fig.tight_layout()
+        show_custom_fig(fig, self.canvas_frame)
+        self.lbl_info.config(text=f&quot;Сіре зображення з гістограмою | Розмір: {gray.shape} | Сер: {np.mean(gray):.1f}&quot;)
+    def _run_negative(self):
+        if not self._check_file(): return
+        neg = (255 - self.img_array[:, :, :3]).astype(np.uint8)
+        base_name = self.image_path.rsplit(&quot;.&quot;, 1)[0]
+        ext = self.image_path.rsplit(&quot;.&quot;, 1)[1]
+        new_name = f&quot;{base_name}_negative.{ext}&quot;
+        show_and_save_gui(neg, new_name, self.canvas_frame, self.lbl_info)
+if __name__ == &quot;__main__&quot;:
+    root = tk.Tk()
+    app = AppLab4(root)
+    root.mainloop()</code></pre>
+        </section>
+
+        <section id="screenshots">
+            <h1>4. Результати виконання роботи</h1>
+
+            <p>Рис. 1. Головне вікно програми після вибору вихідного зображення (вкладка «1. Первинне»)</p>
+            <img src="screen1.png" alt="Головне вікно">
+
+            <p>Рис. 2. Повна числова матриця значень яскравості для всієї фотографії зі скролінгом (вкладка «2. Матриця яскравості»)</p>
+            <img src="screen2.png" alt="Матриця значень яскравості">
+
+            <p>Рис. 3. Теплова карта (Heatmap) значень яскравості зображення на полотні (вкладка «2. Матриця яскравості»)</p>
+            <img src="screen3.png" alt="Теплова карта матриці">
+
+            <p>Рис. 4. Гістограма яскравості зображення (вкладка «3. Гістограма»)</p>
+            <img src="screen4.png" alt="Гістограма яскравості">
+
+            <p>Рис. 5. Бінаризація зображення методом Отсу (вкладка «4. Трансформації»)</p>
+            <img src="screen5.png" alt="Бінаризація методом Отсу">
+
+            <p>Рис. 6. Напівтонове сіре зображення з супутньою гістограмою (вкладка «4. Трансформації»)</p>
+            <img src="screen6.png" alt="Сіре зображення з гістограмою">
+
+            <p>Рис. 7. Результат створення негативу зображення (вкладка «4. Трансформації»)</p>
+            <img src="screen7.png" alt="Негатив зображення">
+        </section>
+
+        <section id="conclusions">
+            <h1>5. Висновки</h1>
+            <p>Під час виконання лабораторної роботи було створено програму на мові Python для аналізу та зміни кольорових характеристик зображень.</p>
+            <p>У ході роботи реалізовано графічний інтерфейс із використанням бібліотеки tkinter, побудовано повну числову матрицю люмінансу за формулою Y = 0.299R + 0.587G + 0.114B для всієї фотографії з можливістю двовимірного скролінгу та візуалізацією у вигляді теплової карти, розроблено модуль побудови гістограми яскравості, а також виконано операції бінаризації (зокрема автоматичним методом Отсу), знебарвлення та створення негативу засобами NumPy, Matplotlib та scikit-image.</p>
+        </section>
+
+    </div>
+
+</body>
+</html>

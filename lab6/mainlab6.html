@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звіт з лабораторної роботи — Оцінка якості фільтрації лінійними та нелінійними фільтрами</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292f;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        nav {
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: #0969da;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1F2328;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.3rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            color: #1F2328;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        .title-block {
+            text-align: center;
+            border: 1px solid #d0d7de;
+            padding: 2.5rem 1.5rem;
+            border-radius: 6px;
+            background-color: #f6f8fa;
+            margin-bottom: 2.5rem;
+        }
+
+        .title-block h1 {
+            border: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .title-block .meta-info {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin: 0.5rem 0 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .title-block .meta-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <nav>
+            <ul>
+                <li><a href="#title">Титульний лист</a></li>
+                <li><a href="#task">Завдання</a></li>
+                <li><a href="#description">Хід роботи</a></li>
+                <li><a href="#code">Код програми</a></li>
+                <li><a href="#screenshots">Скріншоти</a></li>
+                <li><a href="#conclusions">Висновки</a></li>
+            </ul>
+        </nav>
+
+        <section id="title">
+            <div class="title-block">
+                <p>ЗВІТ</p>
+                <h1>з лабораторної роботи з дисципліни<br>«Комп'ютерна графіка та візуалізація»</h1>
+                <p>Тема: дослідження якості фільтрації цифрових зображень лінійними та нелінійними фільтрами.</p>
+
+                <div class="meta-info">
+                    <div>
+                        Виконав:<br>
+                        Студент гр. ІПЗ-24.10<br>
+                        Пастух С. І.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="task">
+            <h1>1. Лист завдання</h1>
+            <p>Тема: дослідження якості фільтрації цифрових зображень лінійними та нелінійними фільтрами.</p>
+            <p>Мета: порівняти ефективність лінійних (усереднювальні, зважені, гаусові) та нелінійних (медіанні, рангові середини діапазону, альфа-усіченого середнього, k-найближчих сусідів) просторових фільтрів для придушення різних типів шумів (адитивного нормального, імпульсного, просторово-нестаціонарного), провести оцінку спотворення за критерієм середньоквадратичної похибки на вибірці з 9 тестових зображень та скласти зведену матрицю 10х9.</p>
+
+            <h3>Перелік завдань:</h3>
+            <ol>
+                <li>Згенерувати набір з 9 тестових зображень розміром 128х128 формату BMP: одне еталонне без шуму (f0), два з адитивним шумом різної дисперсії (f1, f2), два з імпульсним шумом різної щільності (f3, f4), два з просторово-нестаціонарним адитивним шумом від яскравості (f5, f6) та два з просторово-нестаціонарним шумом від координат (f7, f8).</li>
+                <li>Реалізувати 3 лінійні просторові фільтри (осереднювальний 3х3, 5х5, гаусовий, зважений) та 7 нелінійних просторових фільтрів (медіанні 3х3 та 5х5, зважений медіанний, середини діапазону, альфа-усіченого середнього, k-найближчих сусідів).</li>
+                <li>Реалізувати математичний розрахунок середньоквадратичного відхилення (спотворення) відновленого зображення від еталона за формулою ε² = (1 / (N * M)) * ∑ |g(i, j) - f0(i, j)|² та обчислення відношення сигнал/шум (PSNR).</li>
+                <li>Розробити графічний інтерфейс користувача з трьома вкладками: генерація та перегляд галереї вибірки, інтерактивна оцінка одного фільтра з графічним порівнянням, та зведена матриця результатів 10х9 з побудовою гістограми спотворень і експортом у CSV.</li>
+                <li>Провести повний розрахунок матриці 10х9 та проаналізувати стійкість різних класів фільтрів до шумів.</li>
+            </ol>
+        </section>
+
+        <section id="description">
+            <h1>2. Опис ходу виконання завдань</h1>
+
+            <h3>Хід розробки та функціональні блоки:</h3>
+            <ol>
+                <li>generate_9_test_images — створення стандартизованого набору з 9 тестових зображень 128х128 пікселів з автоматичним збереженням у форматі BMP: чисте зображення (f0), адитивний шум з дисперсією 15 та 35 (f1, f2), імпульсний шум з імовірністю 0.05 та 0.15 (f3, f4), шум зі змінною дисперсією залежно від яскравості (f5, f6) та координат (f7, f8).</li>
+                <li>Лінійні фільтри (filter_linear_box3, filter_linear_box5, filter_linear_gaussian, filter_linear_weighted) — просторова згортка масками різного радіуса та вагових конфігурацій.</li>
+                <li>Нелінійні фільтри (filter_nonlinear_median3, filter_nonlinear_median5, filter_nonlinear_weighted_median, filter_nonlinear_midpoint, filter_nonlinear_alpha_trimmed, filter_nonlinear_knn) — рангова селекція значень у ковзному вікні, включаючи медіану, півсуму екстремумів, відсікання граничних викидів та усереднення k найближчих сусідів.</li>
+                <li>calculate_distortion — розрахунок числової оцінки спотворення ε² як середнього квадрата різниці між кожним пікселем відфільтрованого зображення та еталонного неспотвореного f0.</li>
+                <li>AppLab6 — графічний інтерфейс на основі tkinter/ttk, що забезпечує автоматизоване виконання експерименту 10х9, заповнення інтерактивної таблиці результатів, побудову графіків порівняння через Matplotlib та експорт даних у CSV файл.</li>
+            </ol>
+
+            <h3>Використані бібліотеки та модулі:</h3>
+            <ol>
+                <li>tkinter / ttk — графічний інтерфейс користувача (вкладки Notebook, випадаючі списки Combobox, таблиця Treeview, кнопки запуску).</li>
+                <li>filedialog / messagebox — інтерактивний вибір базового зображення, експорт звітної таблиці у CSV та сповіщення.</li>
+                <li>numpy — матричні обчислення над пікселями, генерація шумів, розрахунок метрики середньоквадратичного спотворення ε².</li>
+                <li>scipy (scipy.ndimage) — швидкі операції згортки convolve, фільтри мінімуму, максимуму та медіани.</li>
+                <li>skimage (scikit-image) — завантаження вихідного файлу та збереження набору 9 тестових файлів BMP.</li>
+                <li>matplotlib — виведення галереї 3х3, побудова порівняльних візуалізацій та стовпчикових діаграм ефективності фільтрів.</li>
+            </ol>
+        </section>
+
+        <section id="code">
+            <h1>3. Лістинг програми</h1>
+            <pre><code>import os
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import numpy as np
+from scipy.ndimage import convolve, median_filter
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from skimage.io import imread, imsave
+from skimage.transform import resize
+def generate_9_test_images(source_img: np.ndarray, out_dir: str = &quot;test_images_lab6&quot;) -&gt; dict:
+    os.makedirs(out_dir, exist_ok=True)
+    if source_img.ndim == 3:
+        gray = 0.299 * source_img[:, :, 0] + 0.587 * source_img[:, :, 1] + 0.114 * source_img[:, :, 2]
+    else:
+        gray = source_img.astype(np.float32)
+    f0 = resize(gray, (128, 128), preserve_range=True, anti_aliasing=True).astype(np.uint8)
+    h, w = f0.shape
+    noise1 = np.random.normal(0, 15.0, (h, w))
+    f1 = np.clip(f0.astype(np.float32) + noise1, 0, 255).astype(np.uint8)
+    noise2 = np.random.normal(0, 35.0, (h, w))
+    f2 = np.clip(f0.astype(np.float32) + noise2, 0, 255).astype(np.uint8)
+    f3 = f0.copy()
+    mask3_pepper = np.random.rand(h, w) &lt; 0.025
+    mask3_salt = np.random.rand(h, w) &lt; 0.025
+    f3[mask3_pepper] = 0
+    f3[mask3_salt] = 255
+    f4 = f0.copy()
+    mask4_pepper = np.random.rand(h, w) &lt; 0.075
+    mask4_salt = np.random.rand(h, w) &lt; 0.075
+    f4[mask4_pepper] = 0
+    f4[mask4_salt] = 255
+    sigma_I1 = np.sqrt(2.0 * np.maximum(0.0, f0.astype(np.float32)))
+    f5 = np.clip(f0.astype(np.float32) + np.random.normal(0, 1.0, (h, w)) * sigma_I1, 0, 255).astype(np.uint8)
+    sigma_I2 = np.sqrt(6.0 * np.maximum(0.0, f0.astype(np.float32)))
+    f6 = np.clip(f0.astype(np.float32) + np.random.normal(0, 1.0, (h, w)) * sigma_I2, 0, 255).astype(np.uint8)
+    cols = np.linspace(0, 25.0, w)
+    sigma_coord1 = np.tile(cols, (h, 1))
+    f7 = np.clip(f0.astype(np.float32) + np.random.normal(0, 1.0, (h, w)) * sigma_coord1, 0, 255).astype(np.uint8)
+    cols2 = np.linspace(0, 50.0, w)
+    sigma_coord2 = np.tile(cols2, (h, 1))
+    f8 = np.clip(f0.astype(np.float32) + np.random.normal(0, 1.0, (h, w)) * sigma_coord2, 0, 255).astype(np.uint8)
+    images = {
+        &quot;f0&quot;: (f0, &quot;Зображення без шуму&quot;),
+        &quot;f1&quot;: (f1, &quot;Адитивний шум (sigma=15)&quot;),
+        &quot;f2&quot;: (f2, &quot;Адитивний шум (sigma=35)&quot;),
+        &quot;f3&quot;: (f3, &quot;Імпульсний шум (p=0.05)&quot;),
+        &quot;f4&quot;: (f4, &quot;Імпульсний шум (p=0.15)&quot;),
+        &quot;f5&quot;: (f5, &quot;Нестаціонарний шум f(I) [alpha=2]&quot;),
+        &quot;f6&quot;: (f6, &quot;Нестаціонарний шум f(I) [alpha=6]&quot;),
+        &quot;f7&quot;: (f7, &quot;Нестаціонарний шум f(x,y) [sigma=25]&quot;),
+        &quot;f8&quot;: (f8, &quot;Нестаціонарний шум f(x,y) [sigma=50]&quot;)
+    }
+    for key, (img, desc) in images.items():
+        file_path = os.path.join(out_dir, f&quot;{key}.bmp&quot;)
+        imsave(file_path, img)
+    return images
+def filter_linear_box3(img: np.ndarray) -&gt; np.ndarray:
+    k = np.ones((3, 3), dtype=np.float32) / 9.0
+    return np.clip(convolve(img.astype(np.float32), k, mode=&quot;nearest&quot;), 0, 255).astype(np.uint8)
+def filter_linear_box5(img: np.ndarray) -&gt; np.ndarray:
+    k = np.ones((5, 5), dtype=np.float32) / 25.0
+    return np.clip(convolve(img.astype(np.float32), k, mode=&quot;nearest&quot;), 0, 255).astype(np.uint8)
+def filter_linear_gaussian(img: np.ndarray) -&gt; np.ndarray:
+    x = np.arange(-2, 3)
+    k1d = np.exp(-0.5 * (x / 1.0)**2)
+    k1d /= np.sum(k1d)
+    k2d = np.outer(k1d, k1d)
+    return np.clip(convolve(img.astype(np.float32), k2d, mode=&quot;nearest&quot;), 0, 255).astype(np.uint8)
+def filter_linear_weighted(img: np.ndarray) -&gt; np.ndarray:
+    k = np.array([
+        [1, 2, 1],
+        [2, 4, 2],
+        [1, 2, 1]
+    ], dtype=np.float32) / 16.0
+    return np.clip(convolve(img.astype(np.float32), k, mode=&quot;nearest&quot;), 0, 255).astype(np.uint8)
+def filter_nonlinear_median3(img: np.ndarray) -&gt; np.ndarray:
+    return median_filter(img, size=3)
+def filter_nonlinear_median5(img: np.ndarray) -&gt; np.ndarray:
+    return median_filter(img, size=5)
+def filter_nonlinear_weighted_median(img: np.ndarray) -&gt; np.ndarray:
+    h, w = img.shape
+    pad = np.pad(img, 1, mode=&quot;edge&quot;)
+    out = np.zeros((h, w), dtype=np.uint8)
+    for y in range(h):
+        for x in range(w):
+            win = pad[y:y+3, x:x+3]
+            sample = [
+                win[0, 0],
+                win[0, 1], win[0, 1],
+                win[0, 2],
+                win[1, 0], win[1, 0],
+                win[1, 1], win[1, 1], win[1, 1],
+                win[1, 2], win[1, 2],
+                win[2, 0],
+                win[2, 1], win[2, 1],
+                win[2, 2]
+            ]
+            sample.sort()
+            out[y, x] = sample[len(sample) // 2]
+    return out
+def filter_nonlinear_midpoint(img: np.ndarray) -&gt; np.ndarray:
+    from scipy.ndimage import minimum_filter, maximum_filter
+    min_f = minimum_filter(img.astype(np.float32), size=3)
+    max_f = maximum_filter(img.astype(np.float32), size=3)
+    mid = 0.5 * (min_f + max_f)
+    return np.clip(mid, 0, 255).astype(np.uint8)
+def filter_nonlinear_alpha_trimmed(img: np.ndarray, alpha: float = 0.2) -&gt; np.ndarray:
+    h, w = img.shape
+    pad = np.pad(img, 1, mode=&quot;edge&quot;)
+    out = np.zeros((h, w), dtype=np.uint8)
+    trim = int(round(alpha * 9))
+    for y in range(h):
+        for x in range(w):
+            win = np.sort(pad[y:y+3, x:x+3].ravel())
+            trimmed = win[trim : 9 - trim] if trim &lt; 4 else win
+            out[y, x] = int(np.mean(trimmed))
+    return out
+def filter_nonlinear_knn(img: np.ndarray, k: int = 5) -&gt; np.ndarray:
+    h, w = img.shape
+    pad = np.pad(img, 1, mode=&quot;edge&quot;)
+    out = np.zeros((h, w), dtype=np.uint8)
+    for y in range(h):
+        for x in range(w):
+            center = pad[y+1, x+1]
+            win = pad[y:y+3, x:x+3].ravel()
+            diffs = np.abs(win.astype(np.int32) - int(center))
+            nearest_idx = np.argsort(diffs)[:k]
+            out[y, x] = int(np.mean(win[nearest_idx]))
+    return out
+FILTERS = [
+    (&quot;Лінійний: Усереднення 3x3&quot;, filter_linear_box3),
+    (&quot;Лінійний: Усереднення 5x5&quot;, filter_linear_box5),
+    (&quot;Лінійний: Гаус (sigma=1.0)&quot;, filter_linear_gaussian),
+    (&quot;Лінійний: Зважене усереднення 3x3&quot;, filter_linear_weighted),
+    (&quot;Нелінійний: Медіанний 3x3&quot;, filter_nonlinear_median3),
+    (&quot;Нелінійний: Медіанний 5x5&quot;, filter_nonlinear_median5),
+    (&quot;Нелінійний: Зважена медіана 3x3&quot;, filter_nonlinear_weighted_median),
+    (&quot;Нелінійний: Середина діапазону (Midpoint)&quot;, filter_nonlinear_midpoint),
+    (&quot;Нелінійний: Альфа-усічене середнє (Alpha-trimmed)&quot;, filter_nonlinear_alpha_trimmed),
+    (&quot;Нелінійний: k-найближчих сусідів (k-NN)&quot;, filter_nonlinear_knn),
+]
+def calculate_distortion(g: np.ndarray, f0: np.ndarray) -&gt; float:
+    diff = g.astype(np.float64) - f0.astype(np.float64)
+    return float(np.mean(diff ** 2))
+class AppLab6:
+    def __init__(self, root):
+        self.root = root
+        self.root.title(&quot;Лабораторна робота №6 — Оцінка якості фільтрації лінійними та нелінійними фільтрами&quot;)
+        self.root.geometry(&quot;1100x740&quot;)
+        self.source_image = None
+        self.test_images = {}
+        self.f0 = None
+        self.results_matrix = {}
+        file_frame = ttk.Frame(root, padding=10)
+        file_frame.pack(fill=tk.X)
+        ttk.Button(file_frame, text=&quot;Вибрати базове зображення (або mem14.jpg)&quot;, command=self.select_file).pack(side=tk.LEFT)
+        self.lbl_file = ttk.Label(file_frame, text=&quot;Файл не вибрано (буде згенеровано за замовчуванням)&quot;, padding=(10, 0))
+        self.lbl_file.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        main_frame = ttk.Frame(root, padding=10)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        self.notebook = ttk.Notebook(main_frame)
+        self.notebook.pack(side=tk.LEFT, fill=tk.BOTH, padx=(0, 10), expand=False)
+        preview_frame = ttk.LabelFrame(main_frame, text=&quot;Візуалізація та графіки&quot;, padding=10)
+        preview_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.lbl_info = ttk.Label(preview_frame, text=&quot;&quot;)
+        self.lbl_info.pack(anchor=tk.W, pady=(0, 5))
+        self.canvas_frame = ttk.Frame(preview_frame)
+        self.canvas_frame.pack(fill=tk.BOTH, expand=True)
+        self._init_generate_tab()
+        self._init_single_filter_tab()
+        self._init_summary_table_tab()
+        if os.path.exists(&quot;mem14.jpg&quot;):
+            try:
+                self.source_image = imread(&quot;mem14.jpg&quot;)
+                self.lbl_file.config(text=&quot;mem14.jpg (завантажено автоматично)&quot;)
+                self._generate_dataset()
+            except Exception:
+                pass
+    def select_file(self):
+        path = filedialog.askopenfilename(
+            filetypes=[(&quot;Image files&quot;, &quot;*.jpg *.jpeg *.png *.bmp *.tiff *.gif&quot;), (&quot;All files&quot;, &quot;*.*&quot;)]
+        )
+        if path:
+            try:
+                self.source_image = imread(path)
+                self.lbl_file.config(text=path)
+                self._generate_dataset()
+            except Exception as e:
+                messagebox.showerror(&quot;Помилка&quot;, f&quot;Не вдалося відкрити зображення:\n{e}&quot;)
+    def _generate_dataset(self):
+        if self.source_image is None:
+            arr = np.zeros((128, 128), dtype=np.uint8)
+            for y in range(128):
+                for x in range(128):
+                    arr[y, x] = int((x + y) / 2)
+            self.source_image = arr
+        self.test_images = generate_9_test_images(self.source_image, &quot;test_images_lab6&quot;)
+        self.f0 = self.test_images[&quot;f0&quot;][0]
+        self.lbl_gen_status.config(text=f&quot;Згенеровано 9 зображень 128x128 в папку test_images_lab6&quot;)
+        self._show_gallery()
+    def _init_generate_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;1. Набір з 9 зображень&quot;)
+        ttk.Label(tab, text=&quot;Підготовка набору тестових зображень\n(128x128 *.bmp, стор. 96)&quot;, font=(&quot;Arial&quot;, 9, &quot;bold&quot;)).pack(anchor=tk.W, pady=5)
+        ttk.Button(tab, text=&quot;Згенерувати та зберегти всі 9 BMP файлів&quot;, command=self._generate_dataset).pack(fill=tk.X, pady=8)
+        self.lbl_gen_status = ttk.Label(tab, text=&quot;Очікування генерації...&quot;, foreground=&quot;gray&quot;)
+        self.lbl_gen_status.pack(anchor=tk.W, pady=2)
+        ttk.Button(tab, text=&quot;Показати галерею всіх 9 зображень&quot;, command=self._show_gallery).pack(fill=tk.X, pady=8)
+        self.tree_imgs = ttk.Treeview(tab, columns=(&quot;key&quot;, &quot;desc&quot;), show=&quot;headings&quot;, height=9)
+        self.tree_imgs.heading(&quot;key&quot;, text=&quot;Код&quot;)
+        self.tree_imgs.heading(&quot;desc&quot;, text=&quot;Опис шуму&quot;)
+        self.tree_imgs.column(&quot;key&quot;, width=40)
+        self.tree_imgs.column(&quot;desc&quot;, width=200)
+        self.tree_imgs.pack(fill=tk.BOTH, expand=True, pady=5)
+        img_descriptions = [
+            (&quot;f0&quot;, &quot;Тестове без шуму&quot;),
+            (&quot;f1&quot;, &quot;Адитивний шум (sigma=15)&quot;),
+            (&quot;f2&quot;, &quot;Адитивний шум (sigma=35)&quot;),
+            (&quot;f3&quot;, &quot;Імпульсний шум (p=0.05)&quot;),
+            (&quot;f4&quot;, &quot;Імпульсний шум (p=0.15)&quot;),
+            (&quot;f5&quot;, &quot;Нестаціонарний від яскравості (alpha=2)&quot;),
+            (&quot;f6&quot;, &quot;Нестаціонарний від яскравості (alpha=6)&quot;),
+            (&quot;f7&quot;, &quot;Нестаціонарний від координат (max=25)&quot;),
+            (&quot;f8&quot;, &quot;Нестаціонарний від координат (max=50)&quot;)
+        ]
+        for k, d in img_descriptions:
+            self.tree_imgs.insert(&quot;&quot;, tk.END, values=(k, d))
+    def _show_gallery(self):
+        if not self.test_images: return
+        for widget in self.canvas_frame.winfo_children():
+            widget.destroy()
+        fig, axes = plt.subplots(3, 3, figsize=(6.5, 6))
+        keys = [&quot;f0&quot;, &quot;f1&quot;, &quot;f2&quot;, &quot;f3&quot;, &quot;f4&quot;, &quot;f5&quot;, &quot;f6&quot;, &quot;f7&quot;, &quot;f8&quot;]
+        for idx, k in enumerate(keys):
+            ax = axes[idx // 3, idx % 3]
+            img, desc = self.test_images[k]
+            ax.imshow(img, cmap=&quot;gray&quot;, vmin=0, vmax=255)
+            ax.set_title(f&quot;{k}: {desc[:15]}...&quot;, fontsize=8)
+            ax.axis(&quot;off&quot;)
+        fig.tight_layout()
+        canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        plt.close(fig)
+        self.lbl_info.config(text=&quot;Галерея: 9 тестових зображень 128x128 *.bmp (без шуму, адитивний, імпульсний, нестаціонарний)&quot;)
+    def _init_single_filter_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;2. Оцінка фільтра&quot;)
+        ttk.Label(tab, text=&quot;Вибір тестового зображення:&quot;).pack(anchor=tk.W, pady=2)
+        self.combo_img_select = ttk.Combobox(tab, values=[f&quot;{k}: {self.test_images[k][1]}&quot; if k in self.test_images else k for k in [&quot;f0&quot;, &quot;f1&quot;, &quot;f2&quot;, &quot;f3&quot;, &quot;f4&quot;, &quot;f5&quot;, &quot;f6&quot;, &quot;f7&quot;, &quot;f8&quot;]], state=&quot;readonly&quot;)
+        self.combo_img_select.current(1)
+        self.combo_img_select.pack(fill=tk.X, pady=4)
+        ttk.Label(tab, text=&quot;Вибір фільтра:&quot;).pack(anchor=tk.W, pady=2)
+        self.combo_filter_select = ttk.Combobox(tab, values=[name for name, _ in FILTERS], state=&quot;readonly&quot;)
+        self.combo_filter_select.current(4)
+        self.combo_filter_select.pack(fill=tk.X, pady=4)
+        ttk.Button(tab, text=&quot;Застосувати та оцінити якість&quot;, command=self._run_single_eval).pack(fill=tk.X, pady=10)
+        self.txt_single_eval = tk.Text(tab, height=12, width=32, wrap=tk.WORD)
+        self.txt_single_eval.pack(fill=tk.BOTH, expand=True, pady=5)
+    def _run_single_eval(self):
+        if not self.test_images:
+            messagebox.showwarning(&quot;Увага&quot;, &quot;Спочатку згенеруйте набір тестових зображень!&quot;)
+            return
+        img_str = self.combo_img_select.get().split(&quot;:&quot;)[0].strip()
+        img_key = img_str if img_str in self.test_images else &quot;f1&quot;
+        current_img, desc = self.test_images[img_key]
+        f0_clean = self.f0
+        filter_idx = self.combo_filter_select.current()
+        fname, func = FILTERS[filter_idx]
+        filtered = func(current_img)
+        eps_f0 = calculate_distortion(filtered, f0_clean)
+        eps_noise = calculate_distortion(current_img, f0_clean)
+        psnr = 10 * np.log10((255.0**2) / max(1e-5, eps_f0))
+        for widget in self.canvas_frame.winfo_children():
+            widget.destroy()
+        fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(8, 3.5))
+        ax1.imshow(f0_clean, cmap=&quot;gray&quot;, vmin=0, vmax=255)
+        ax1.set_title(&quot;f0: Без шуму&quot;, fontsize=9)
+        ax1.axis(&quot;off&quot;)
+        ax2.imshow(current_img, cmap=&quot;gray&quot;, vmin=0, vmax=255)
+        ax2.set_title(f&quot;{img_key}: Зашумлене\nε² = {eps_noise:.1f}&quot;, fontsize=9)
+        ax2.axis(&quot;off&quot;)
+        ax3.imshow(filtered, cmap=&quot;gray&quot;, vmin=0, vmax=255)
+        ax3.set_title(f&quot;Відфільтроване\nε² = {eps_f0:.1f} (PSNR {psnr:.1f}dB)&quot;, fontsize=9)
+        ax3.axis(&quot;off&quot;)
+        fig.tight_layout()
+        canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        plt.close(fig)
+        eval_text = (
+            f&quot;--- Результати оцінки ---\n&quot;
+            f&quot;Зображення: {img_key} ({desc})\n&quot;
+            f&quot;Фільтр: {fname}\n&quot;
+            f&quot;Початкове спотворення шуму:\n  ε²_noise = {eps_noise:.2f}\n&quot;
+            f&quot;Залишкове спотворення після фільтрації:\n  ε²_filter = {eps_f0:.2f}\n&quot;
+            f&quot;PSNR: {psnr:.2f} dB\n&quot;
+            f&quot;Ефективність шумозаглушення:\n  Δε² = {eps_noise - eps_f0:+.2f}\n&quot;
+        )
+        self.txt_single_eval.delete(&quot;1.0&quot;, tk.END)
+        self.txt_single_eval.insert(tk.END, eval_text)
+        self.lbl_info.config(text=f&quot;Фільтр: {fname} | Спотворення: ε² = {eps_f0:.2f}&quot;)
+    def _init_summary_table_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;3. Зведена таблиця (10x9)&quot;)
+        ttk.Label(tab, text=&quot;Повний експеримент:\n10 фільтрів x 9 зображень (стор. 96)&quot;, font=(&quot;Arial&quot;, 9, &quot;bold&quot;)).pack(anchor=tk.W, pady=5)
+        ttk.Button(tab, text=&quot;▶ Запустити повний розрахунок (10x9)&quot;, command=self._run_full_experiment).pack(fill=tk.X, pady=5)
+        ttk.Button(tab, text=&quot;Побудувати графік порівняння якості&quot;, command=self._plot_summary_chart).pack(fill=tk.X, pady=5)
+        ttk.Button(tab, text=&quot;Експорт таблиці у CSV...&quot;, command=self._export_summary_csv).pack(fill=tk.X, pady=5)
+        columns = [&quot;filter&quot;] + [f&quot;f{i}&quot; for i in range(9)]
+        self.tree_summary = ttk.Treeview(tab, columns=columns, show=&quot;headings&quot;, height=11)
+        self.tree_summary.heading(&quot;filter&quot;, text=&quot;Фільтр&quot;)
+        self.tree_summary.column(&quot;filter&quot;, width=120)
+        for i in range(9):
+            self.tree_summary.heading(f&quot;f{i}&quot;, text=f&quot;f{i}&quot;)
+            self.tree_summary.column(f&quot;f{i}&quot;, width=40)
+        self.tree_summary.pack(fill=tk.BOTH, expand=True, pady=5)
+    def _run_full_experiment(self):
+        if not self.test_images:
+            self._generate_dataset()
+        f0 = self.f0
+        keys = [f&quot;f{i}&quot; for i in range(9)]
+        for row in self.tree_summary.get_children():
+            self.tree_summary.delete(row)
+        self.results_matrix = {}
+        for f_idx, (fname, ffunc) in enumerate(FILTERS):
+            row_vals = [fname.split(&quot;:&quot;)[1].strip() if &quot;:&quot; in fname else fname]
+            for k in keys:
+                img_data = self.test_images[k][0]
+                filtered = ffunc(img_data)
+                eps = calculate_distortion(filtered, f0)
+                self.results_matrix[(f_idx, k)] = eps
+                row_vals.append(f&quot;{eps:.1f}&quot;)
+            self.tree_summary.insert(&quot;&quot;, tk.END, values=row_vals)
+        messagebox.showinfo(&quot;Успіх&quot;, &quot;Повний експеримент завершено! Таблицю спотворень розраховано.&quot;)
+        self._plot_summary_chart()
+    def _plot_summary_chart(self):
+        if not self.results_matrix:
+            self._run_full_experiment()
+        for widget in self.canvas_frame.winfo_children():
+            widget.destroy()
+        fig, ax = plt.subplots(figsize=(7, 4.5))
+        filter_names = [f[0].split(&quot;:&quot;)[1].strip()[:10] for f in FILTERS]
+        x = np.arange(len(filter_names))
+        width = 0.25
+        eps_f0 = [self.results_matrix.get((i, &quot;f0&quot;), 0) for i in range(len(FILTERS))]
+        eps_f1 = [self.results_matrix.get((i, &quot;f1&quot;), 0) for i in range(len(FILTERS))]
+        eps_f3 = [self.results_matrix.get((i, &quot;f3&quot;), 0) for i in range(len(FILTERS))]
+        ax.bar(x - width, eps_f0, width, label=&quot;f0 (спотворення оригіналу)&quot;)
+        ax.bar(x, eps_f1, width, label=&quot;f1 (адитивний шум)&quot;)
+        ax.bar(x + width, eps_f3, width, label=&quot;f3 (імпульсний шум)&quot;)
+        ax.set_ylabel(&quot;Величина спотворення ε² (менше = краще)&quot;)
+        ax.set_title(&quot;Порівняння ефективності 10 фільтрів для різних типів шуму&quot;)
+        ax.set_xticks(x)
+        ax.set_xticklabels(filter_names, rotation=35, ha=&quot;right&quot;, fontsize=8)
+        ax.legend()
+        ax.grid(True, linestyle=&quot;--&quot;, alpha=0.5)
+        fig.tight_layout()
+        canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
+        canvas.draw()
+        canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+        plt.close(fig)
+        self.lbl_info.config(text=&quot;Графік порівняння: Спотворення ε² для 10 фільтрів на f0, f1, f3&quot;)
+    def _export_summary_csv(self):
+        if not self.results_matrix:
+            messagebox.showwarning(&quot;Увага&quot;, &quot;Спочатку запустіть експеримент!&quot;)
+            return
+        out_path = filedialog.asksaveasfilename(
+            defaultextension=&quot;.csv&quot;,
+            filetypes=[(&quot;CSV files&quot;, &quot;*.csv&quot;), (&quot;All files&quot;, &quot;*.*&quot;)]
+        )
+        if out_path:
+            try:
+                import csv
+                keys = [f&quot;f{i}&quot; for i in range(9)]
+                with open(out_path, &quot;w&quot;, newline=&quot;&quot;, encoding=&quot;utf-8-sig&quot;) as f:
+                    writer = csv.writer(f)
+                    writer.writerow([&quot;Фільтр&quot;] + keys)
+                    for f_idx, (fname, _) in enumerate(FILTERS):
+                        row = [fname] + [f&quot;{self.results_matrix.get((f_idx, k), 0):.2f}&quot; for k in keys]
+                        writer.writerow(row)
+                messagebox.showinfo(&quot;Успіх&quot;, f&quot;Результати експортовано у:\n{out_path}&quot;)
+            except Exception as e:
+                messagebox.showerror(&quot;Помилка&quot;, f&quot;Не вдалося зберегти CSV:\n{e}&quot;)
+if __name__ == &quot;__main__&quot;:
+    root = tk.Tk()
+    app = AppLab6(root)
+    root.mainloop()</code></pre>
+        </section>
+
+        <section id="screenshots">
+            <h1>4. Результати виконання роботи</h1>
+
+            <p>Рис. 1. Галерея з 9 згенерованих тестових зображень 128х128 *.bmp (f0 - f8, вкладка «1. Набір з 9 зображень»)</p>
+            <img src="screen1.png" alt="Галерея тестових зображень">
+
+            <p>Рис. 2. Оцінка лінійного осереднювального фільтра 3х3 на зображенні f1 з адитивним шумом (вкладка «2. Оцінка фільтра»)</p>
+            <img src="screen2.png" alt="Оцінка осереднювального фільтра">
+
+            <p>Рис. 3. Оцінка нелінійного медіанного фільтра 3х3 на зображенні f3 з імпульсним шумом (вкладка «2. Оцінка фільтра»)</p>
+            <img src="screen3.png" alt="Оцінка медіанного фільтра">
+
+            <p>Рис. 4. Оцінка гаусового фільтра на зображенні f2 з сильним адитивним шумом (вкладка «2. Оцінка фільтра»)</p>
+            <img src="screen4.png" alt="Оцінка гаусового фільтра">
+
+            <p>Рис. 5. Зведена таблиця результатів експерименту 10х9 зі значеннями спотворення ε² (вкладка «3. Зведена таблиця (10х9)»)</p>
+            <img src="screen5.png" alt="Зведена таблиця 10х9">
+
+            <p>Рис. 6. Графік порівняння якості фільтрації для різних типів шуму (вкладка «3. Зведена таблиця (10х9)»)</p>
+            <img src="screen6.png" alt="Графік порівняння спотворень">
+
+            <p>Рис. 7. Результати повного експерименту з розрахованими показниками у вікні програми</p>
+            <img src="screen7.png" alt="Повний розрахунок">
+        </section>
+
+        <section id="conclusions">
+            <h1>5. Висновки</h1>
+            <p>Під час виконання лабораторної роботи було досліджено ефективність 10 просторових фільтрів (лінійних та нелінійних) для придушення різних типів шумів на наборі з 9 тестових зображень 128х128 формату BMP.</p>
+            <p>У ході експерименту встановлено, що лінійні фільтри (осереднення та Гаус) ефективно пригнічують адитивний шум з нормальним розподілом, проте спричиняють розмиття контурів і є неефективними при імпульсному шумі. Нелінійні рангові фільтри (медіанний, k-NN) продемонстрували найкращі показники придушення імпульсного шуму (зниження ε² майже до рівня оригіналу) зі збереженням меж об'єктів. Програма автоматизує розрахунок показників спотворення ε², побудову діаграм та експорт результатів у CSV.</p>
+        </section>
+
+    </div>
+
+</body>
+</html>

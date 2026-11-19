@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звіт з лабораторної роботи №5 - Варіант 18</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292f;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        nav {
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: #0969da;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1F2328;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            margin-bottom: 0.35rem;
+        }
+
+        .title-block {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 2px solid #d0d7de;
+            margin-bottom: 2rem;
+        }
+
+        .title-block h1 {
+            border-bottom: none;
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .title-block p {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .title-block .meta-info {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin: 0.5rem 0 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .title-block .meta-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <nav>
+            <ul>
+                <li><a href="#title">1. Титульний лист</a></li>
+                <li><a href="#task">2. Лист завдання</a></li>
+                <li><a href="#description">3. Хід виконання</a></li>
+                <li><a href="#method">4. Метод реалізації</a></li>
+                <li><a href="#algorithm">5. Алгоритм реалізації</a></li>
+                <li><a href="#code">6. Лістинг програми</a></li>
+                <li><a href="#screenshots">7. Скріншоти</a></li>
+                <li><a href="#conclusions">8. Висновки</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1. ТИТУЛЬНИЙ ЛИСТ -->
+        <section id="title">
+            <div class="title-block">
+                <p>ЗВІТ</p>
+                <h1>з лабораторної роботи №5 з дисципліни<br>«Комп'ютерна графіка та візуалізація»</h1>
+                <p>Тема: Фільтрація зображення. Реалізувати алгоритми, що дозволяють здійснити фільтрацію зображення, за варіантами: Оператор k найближчих сусідів (Варіант 18).</p>
+
+                <div class="meta-info">
+                    <div>
+                        Виконав:<br>
+                        Студент гр. ІПЗ-24.10<br>
+                        Пастух С. І.
+                    </div>
+                    <div>
+                        Перевірив:<br>
+                        Викладач кафедри ПЗ<br>
+                        Житомир — 2026
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ЛИСТ ЗАВДАННЯ -->
+        <section id="task">
+            <h1>2. Лист завдання</h1>
+            <p>Тема: Фільтрація зображення.</p>
+            <p>Мета роботи: набути практичних навичок розробки алгоритмів просторової фільтрації зображень та побудови призначеного для користувача інтерфейсу для комплексного редагування графічних файлів.</p>
+            <p>Індивідуальне завдання (Варіант 18): Реалізувати просторову фільтрацію зображення за допомогою оператора k найближчих сусідів (k-NN filter).</p>
+            <p>Основні вимоги до програми:</p>
+            <ol>
+                <li>Реалізувати інтерфейс редактора зображень Image Editor з вкладками функціональних модулів та інтерактивними повзунками регулювання параметрів: Overall Balance, Red, Green, Blue, Contrast, Opacity.</li>
+                <li>Реалізувати керування просторовою фільтрацією (Filter Mode) за варіантом 18 — оператор k найближчих сусідів (k-NN) із налаштуванням кількості сусідів k та розміру ковзного вікна.</li>
+                <li>Реалізувати блок динамічної побудови гістограми яскравості в реальному часі при зміні параметрів повзунками.</li>
+                <li>Забезпечити збереження обробленого результату у графічний файл.</li>
+            </ol>
+        </section>
+
+        <!-- 3. ОПИС ХОДУ ВИКОНАННЯ ЗАВДАННЯ -->
+        <section id="description">
+            <h1>3. Опис ходу виконання завдання з переліком використаних функцій мови програмування</h1>
+            <p>У ході виконання лабораторної роботи було створено повноцінний графічний додаток Image Editor мовою програмування Python для інтерактивного редагування зображень та просторової фільтрації оператором k найближчих сусідів. Розробка включала такі етапи:</p>
+            <ol>
+                <li>Реалізація векторизованої функції filter_knn на основі ковзного вікна з крайовим доповненням граничних пікселів (padding mode="edge") для обробки напівтонових та кольорових RGB/RGBA зображень.</li>
+                <li>Створення модуля обробки колірного простору з незалежним регулюванням інтенсивностей червоного, зеленого та синього каналів, загального балансу яскравості, контрастності та прозорості.</li>
+                <li>Інтеграція алгоритму k-NN у загальний графічний конвеєр обробки для усунення імпульсних шумів та згладжування текстур зі збереженням різких меж.</li>
+                <li>Побудова модуля швидкої динамічної візуалізації гістограми в реальному часі (64 біни) на окремому графічному полотні Canvas.</li>
+                <li>Розробка ергономічного графічного інтерфейсу на базі Tkinter із вкладками, повзунками Scale, випадаючим списком режимів фільтрації та швидким попереднім переглядом через Pillow (PIL.ImageTk).</li>
+            </ol>
+
+            <h3>Перелік використаних бібліотек та функцій мови Python:</h3>
+            <ol>
+                <li>numpy.pad — доповнення меж матриці крайовими значеннями (mode="edge") для коректної обробки крайніх рядків і стовпчиків вікнами 3x3 або 5x5.</li>
+                <li>numpy.abs — знаходження абсолютних значень фотометричних різниць яскравості між центральним пікселем та його сусідами.</li>
+                <li>numpy.argpartition — швидке знаходження індексів k найменших значень відстаней без повного сортування масиву.</li>
+                <li>numpy.take_along_axis — вибірка значень найближчих пікселів за розрахованими індексами.</li>
+                <li>numpy.mean — розрахунок середнього арифметичного значення відібраних k сусідів, а також середньої яскравості зображення для регулювання контрастності.</li>
+                <li>numpy.clip — обмеження значень масиву діапазоном 0..255 для уникнення переповнення цілих чисел.</li>
+                <li>numpy.histogram — швидке обчислення розподілу рівнів яскравості для динамічного малювання гістограми.</li>
+                <li>skimage.io.imread та imsave — відкриття та збереження графічних файлів на диск.</li>
+                <li>PIL.Image та PIL.ImageTk.PhotoImage — швидке конвертування масивів NumPy для плавного оновлення полотна Tkinter у реальному часі.</li>
+                <li>tkinter / ttk (Tk, Frame, Notebook, Scale, Spinbox, Combobox, Canvas, Button, Label, filedialog, messagebox) — компоненти віконного інтерфейсу користувача.</li>
+            </ol>
+        </section>
+
+        <!-- 4. ОПИС МЕТОДУ РЕАЛІЗАЦІЇ ЗАВДАННЯ -->
+        <section id="method">
+            <h1>4. Опис методу реалізації завдання</h1>
+            <p>Оператор k найближчих сусідів (k-NN filter) належить до класу нелінійних рангових методів локальної просторової фільтрації зображень.</p>
+            <p>Фізичний зміст методу полягає у селективному осередненні: замість усереднення всіх точок ковзного вікна (як це робить класичний лінійний фільтр, що розмиває межі предметів), оператор аналізує фотометричну відстань між центральним пікселем P_center та кожним із його сусідів P_i: d_i = |P_i - P_center|.</p>
+            <p>З усього околу відбираються лише k сусідів, що мають найменшу різницю яскравості з центром. Якщо центральний піксель розташований поруч із контрастною гранню, сусіди, що знаходяться по інший бік межі, матимуть велику різницю d_i і будуть автоматично виключені з вибірки. Усереднюються лише точки тієї ж самої однорідної області, завдяки чому придушується шум при повному збереженні чіткості перепадів яскравості.</p>
+            <p>Оператор відрізняється високою стійкістю до шуму: завдяки адаптивному вибору k елементів, аномальні пікселі (шум типу "сіль та перець") не потрапляють у вибірку найближчих сусідів і повністю придушуються, не викликаючи розмиття контурів об'єктів.</p>
+        </section>
+
+        <!-- 5. ОПИС АЛГОРИТМУ РЕАЛІЗАЦІЇ ЗАВДАННЯ -->
+        <section id="algorithm">
+            <h1>5. Опис алгоритму реалізації завдання</h1>
+            <p>Алгоритм повної конвеєрної обробки зображення (pipeline) складається з таких покрокових дій:</p>
+            <ol>
+                <li>Вхідні дані: масив зображення I розміром H x W x C та поточні значення повзунків (Overall Balance, R, G, B, Contrast, Opacity), а також параметри фільтра (k, win_size, режим фільтрації).</li>
+                <li>Колірна корекція: кожен колірний канал множиться на добуток загального балансу та відповідного колірного коефіцієнта: I_col[c] = I[c] * OverallBalance * Factor[c].</li>
+                <li>Корекція контрастності: розраховується середня яскравість ave = mean(I_col) та застосовується лінійне масштабування відхилень I_con = Contrast * (I_col - ave) + ave.</li>
+                <li>Корекція прозорості (Opacity): виконується альфа-змішування з фоном I_op = I_con * Opacity + 255 * (1 - Opacity) з наступним обмеженням значень функцією clip(0, 255).</li>
+                <li>Застосування просторового фільтра k-NN (Варіант 18): у разі активації режиму k-NN Filter для кожного пікселя формується окіл win_size x win_size, обчислюються фотометричні відстані до центрального пікселя, швидким алгоритмом argpartition вибираються k сусідів із найменшою відстанню, і центр замінюється їхнім середнім арифметичним значенням. Якщо обрано режим None, просторова фільтрація не застосовується.</li>
+                <li>Оновлення графічного інтерфейсу: результуючий масив миттєво масштабується під розміри полотна Canvas методом білінійної інтерполяції PIL і виводиться на екран, після чого розраховується гістограма яскравості з малюванням стовпчиків у нижньому вікні.</li>
+            </ol>
+        </section>
+
+        <!-- 6. ЛІСТИНГ ПРОГРАМИ З КОМЕНТАРЯМИ -->
+        <section id="code">
+            <h1>6. Лістинг програми з коментарями</h1>
+            <pre><code>import os
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import numpy as np
+from PIL import Image, ImageTk
+from skimage.io import imread, imsave
+
+# ==============================================================================
+# ЛАБОРАТОРНА РОБОТА №5
+# Варіант 18: Оператор k найближчих сусідів (k-NN filter) + Інтерфейс Image Editor
+# ==============================================================================
+
+def filter_knn(img: np.ndarray, k: int = 5, win_size: int = 3) -&gt; np.ndarray:
+    &quot;&quot;&quot;
+    Варіант 18: Оператор k найближчих сусідів (k-NN filter).
+    Аналізує вікно win_size x win_size навколо кожного пікселя,
+    знаходить k сусідів, найближчих за яскравістю до центру,
+    і замінює центральний піксель їхнім середнім арифметичним.
+    &quot;&quot;&quot;
+    max_k = win_size * win_size
+    k = max(1, min(k, max_k))
+    r = win_size // 2
+
+    if img.ndim == 2:
+        h, w = img.shape
+        padded = np.pad(img.astype(np.float32), r, mode=&quot;edge&quot;)
+        windows = np.zeros((h, w, max_k), dtype=np.float32)
+        idx = 0
+        for dy in range(win_size):
+            for dx in range(win_size):
+                windows[:, :, idx] = padded[dy : dy + h, dx : dx + w]
+                idx += 1
+
+        center_idx = max_k // 2
+        center = windows[:, :, center_idx : center_idx + 1]
+        diffs = np.abs(windows - center)
+
+        part_idx = np.argpartition(diffs, kth=k - 1, axis=-1)[:, :, :k]
+        k_vals = np.take_along_axis(windows, part_idx, axis=-1)
+        res = np.mean(k_vals, axis=-1)
+        return np.clip(res, 0, 255).astype(np.uint8)
+
+    else:
+        res = np.zeros_like(img)
+        channels = min(3, img.shape[2])
+        for c in range(channels):
+            res[:, :, c] = filter_knn(img[:, :, c], k=k, win_size=win_size)
+        if img.shape[2] == 4:
+            res[:, :, 3] = img[:, :, 3]
+        return res
+
+
+# ==============================================================================
+# ГОЛОВНИЙ ДОДАТОК IMAGE EDITOR
+# ==============================================================================
+
+class AppLab5:
+    def __init__(self, root):
+        self.root = root
+        self.root.title(&quot;Image Editor&quot;)
+        self.root.geometry(&quot;980x680&quot;)
+        self.root.minsize(850, 600)
+
+        self.image_path = &quot;&quot;
+        self.source_image = None
+        self.processed_image = None
+        self.tk_preview = None
+
+        # 1. Верхній рядок кнопок дій
+        top_bar = ttk.Frame(root, padding=(10, 8, 10, 4))
+        top_bar.pack(fill=tk.X)
+
+        ttk.Button(top_bar, text=&quot;Open Image...&quot;, command=self.open_image).pack(side=tk.LEFT, padx=3)
+        ttk.Button(top_bar, text=&quot;Slideshow...&quot;, command=self._dummy_action).pack(side=tk.LEFT, padx=3)
+        ttk.Button(top_bar, text=&quot;Batch...&quot;, command=self._dummy_action).pack(side=tk.LEFT, padx=3)
+        ttk.Button(top_bar, text=&quot;Save Image...&quot;, command=self.save_image).pack(side=tk.LEFT, padx=3)
+
+        self.lbl_file_status = ttk.Label(top_bar, text=&quot;&quot;, foreground=&quot;#666&quot;)
+        self.lbl_file_status.pack(side=tk.LEFT, padx=10)
+
+        # 2. Основний горизонтальний спліт
+        content_frame = ttk.Frame(root, padding=10)
+        content_frame.pack(fill=tk.BOTH, expand=True)
+
+        # Ліва панель
+        left_panel = ttk.Frame(content_frame, width=320)
+        left_panel.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 10))
+        left_panel.pack_propagate(False)
+
+        # Вкладки як у референсі
+        self.notebook = ttk.Notebook(left_panel)
+        self.notebook.pack(fill=tk.BOTH, expand=True)
+
+        tab_resize = ttk.Frame(self.notebook, padding=5)
+        tab_color = ttk.Frame(self.notebook, padding=8)
+        tab_recolor = ttk.Frame(self.notebook, padding=5)
+        tab_combine = ttk.Frame(self.notebook, padding=5)
+        tab_watermark = ttk.Frame(self.notebook, padding=5)
+        tab_crop = ttk.Frame(self.notebook, padding=5)
+        tab_split = ttk.Frame(self.notebook, padding=5)
+
+        self.notebook.add(tab_resize, text=&quot;Resize&quot;)
+        self.notebook.add(tab_color, text=&quot;Color&quot;)
+        self.notebook.add(tab_recolor, text=&quot;Recolor&quot;)
+        self.notebook.add(tab_combine, text=&quot;Combine&quot;)
+        self.notebook.add(tab_watermark, text=&quot;Watermark&quot;)
+        self.notebook.add(tab_crop, text=&quot;Crop&quot;)
+        self.notebook.add(tab_split, text=&quot;Split&quot;)
+
+        # Активна вкладка Color за замовчуванням
+        self.notebook.select(tab_color)
+
+        # Вміст вкладки Color (повзунки як у прикладі)
+        self._build_color_tab(tab_color)
+
+        # Права область: велике полотно попереднього перегляду
+        right_panel = ttk.Frame(content_frame)
+        right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+        self.preview_canvas = tk.Canvas(right_panel, bg=&quot;#111111&quot;, highlightthickness=1, highlightbackground=&quot;#999&quot;)
+        self.preview_canvas.pack(fill=tk.BOTH, expand=True)
+
+        # Автоматичне завантаження mem14.jpg якщо існує
+        if os.path.exists(&quot;mem14.jpg&quot;):
+            self.load_image_file(&quot;mem14.jpg&quot;)
+
+    def _build_color_tab(self, parent):
+        # 1. Overall Balance
+        ttk.Label(parent, text=&quot;Overall Balance:&quot;).pack(anchor=tk.W, pady=(2, 0))
+        self.slider_balance = ttk.Scale(parent, from_=0.0, to=2.0, value=1.0, command=self._on_param_change)
+        self.slider_balance.pack(fill=tk.X, pady=(0, 4))
+
+        # 2. Red
+        ttk.Label(parent, text=&quot;Red:&quot;).pack(anchor=tk.W, pady=(2, 0))
+        self.slider_r = ttk.Scale(parent, from_=0.0, to=2.0, value=1.0, command=self._on_param_change)
+        self.slider_r.pack(fill=tk.X, pady=(0, 4))
+
+        # 3. Green
+        ttk.Label(parent, text=&quot;Green:&quot;).pack(anchor=tk.W, pady=(2, 0))
+        self.slider_g = ttk.Scale(parent, from_=0.0, to=2.0, value=1.0, command=self._on_param_change)
+        self.slider_g.pack(fill=tk.X, pady=(0, 4))
+
+        # 4. Blue
+        ttk.Label(parent, text=&quot;Blue:&quot;).pack(anchor=tk.W, pady=(2, 0))
+        self.slider_b = ttk.Scale(parent, from_=0.0, to=2.0, value=1.0, command=self._on_param_change)
+        self.slider_b.pack(fill=tk.X, pady=(0, 4))
+
+        # 5. Contrast
+        ttk.Label(parent, text=&quot;Contrast:&quot;).pack(anchor=tk.W, pady=(2, 0))
+        self.slider_contrast = ttk.Scale(parent, from_=0.1, to=3.0, value=1.0, command=self._on_param_change)
+        self.slider_contrast.pack(fill=tk.X, pady=(0, 4))
+
+        # 6. Opacity
+        ttk.Label(parent, text=&quot;Opacity:&quot;).pack(anchor=tk.W, pady=(2, 0))
+        self.slider_opacity = ttk.Scale(parent, from_=0.0, to=1.0, value=1.0, command=self._on_param_change)
+        self.slider_opacity.pack(fill=tk.X, pady=(0, 6))
+
+        # 7. Reset Button
+        btn_reset = ttk.Button(parent, text=&quot;Reset&quot;, command=self.reset_sliders)
+        btn_reset.pack(pady=(2, 8))
+
+        # 8. Filter Mode Dropdown
+        ttk.Label(parent, text=&quot;Filter Mode:&quot;).pack(anchor=tk.W, pady=(2, 0))
+        self.combo_filter = ttk.Combobox(
+            parent,
+            values=[
+                &quot;None&quot;,
+                &quot;k-NN Filter (Вар. 18: k найближчих)&quot;,
+            ],
+            state=&quot;readonly&quot;
+        )
+        self.combo_filter.current(1)  # За замовчуванням варіант 18
+        self.combo_filter.pack(fill=tk.X, pady=(0, 4))
+        self.combo_filter.bind(&quot;&lt;&lt;ComboboxSelected&gt;&gt;&quot;, lambda e: self.apply_pipeline())
+
+        # Налаштування для k-NN (параметр k та розмір вікна)
+        f_sub = ttk.Frame(parent)
+        f_sub.pack(fill=tk.X, pady=(0, 4))
+
+        ttk.Label(f_sub, text=&quot;k (Сусіди):&quot;).pack(side=tk.LEFT)
+        self.spin_k = ttk.Spinbox(f_sub, from_=1, to=25, width=4)
+        self.spin_k.set(&quot;5&quot;)
+        self.spin_k.pack(side=tk.LEFT, padx=4)
+        self.spin_k.bind(&quot;&lt;KeyRelease&gt;&quot;, lambda e: self.apply_pipeline())
+        self.spin_k.bind(&quot;&lt;&lt;Increment&gt;&gt;&quot;, lambda e: self.apply_pipeline())
+        self.spin_k.bind(&quot;&lt;&lt;Decrement&gt;&gt;&quot;, lambda e: self.apply_pipeline())
+
+        ttk.Label(f_sub, text=&quot;Вікно:&quot;).pack(side=tk.LEFT, padx=(6, 0))
+        self.combo_win = ttk.Combobox(f_sub, values=[&quot;3x3&quot;, &quot;5x5&quot;], width=5, state=&quot;readonly&quot;)
+        self.combo_win.current(0)
+        self.combo_win.pack(side=tk.LEFT, padx=4)
+        self.combo_win.bind(&quot;&lt;&lt;ComboboxSelected&gt;&gt;&quot;, lambda e: self.apply_pipeline())
+
+        # 9. Histogram
+        ttk.Label(parent, text=&quot;Histogram:&quot;).pack(anchor=tk.W, pady=(4, 0))
+        self.hist_canvas = tk.Canvas(parent, height=65, bg=&quot;black&quot;, highlightthickness=1, highlightbackground=&quot;#555&quot;)
+        self.hist_canvas.pack(fill=tk.X, pady=(2, 0))
+
+    def _on_param_change(self, val=None):
+        self.apply_pipeline()
+
+    def reset_sliders(self):
+        self.slider_balance.set(1.0)
+        self.slider_r.set(1.0)
+        self.slider_g.set(1.0)
+        self.slider_b.set(1.0)
+        self.slider_contrast.set(1.0)
+        self.slider_opacity.set(1.0)
+        self.combo_filter.current(0)  # None
+        self.spin_k.set(&quot;5&quot;)
+        self.combo_win.current(0)
+        self.apply_pipeline()
+
+    def open_image(self):
+        path = filedialog.askopenfilename(
+            filetypes=[(&quot;Зображення&quot;, &quot;*.jpg *.jpeg *.png *.bmp *.tiff *.gif&quot;), (&quot;Усі файли&quot;, &quot;*.*&quot;)]
+        )
+        if path:
+            self.load_image_file(path)
+
+    def load_image_file(self, path: str):
+        try:
+            self.image_path = path
+            self.source_image = imread(path)
+            self.lbl_file_status.config(text=os.path.basename(path))
+            self.apply_pipeline()
+        except Exception as e:
+            messagebox.showerror(&quot;Помилка&quot;, f&quot;Не вдалося відкрити зображення:\n{e}&quot;)
+
+    def apply_pipeline(self):
+        if self.source_image is None: return
+
+        # Працюємо у float32
+        arr = self.source_image.astype(np.float32)
+
+        # 1. Застосування колірних повзунків (Overall Balance, R, G, B)
+        bal = float(self.slider_balance.get())
+        r_f = float(self.slider_r.get()) * bal
+        g_f = float(self.slider_g.get()) * bal
+        b_f = float(self.slider_b.get()) * bal
+
+        if arr.ndim == 3 and arr.shape[2] &gt;= 3:
+            arr[:, :, 0] *= r_f
+            arr[:, :, 1] *= g_f
+            arr[:, :, 2] *= b_f
+        else:
+            arr *= bal
+
+        # 2. Контрастність
+        cnt = float(self.slider_contrast.get())
+        if cnt != 1.0:
+            ave = np.mean(arr)
+            arr = cnt * (arr - ave) + ave
+
+        # 3. Прозорість / Накладання (Opacity)
+        op = float(self.slider_opacity.get())
+        if op &lt; 1.0:
+            arr = arr * op + 255.0 * (1.0 - op)
+
+        arr = np.clip(arr, 0, 255).astype(np.uint8)
+
+        # 4. Фільтр (Filter Mode)
+        mode = self.combo_filter.get()
+        try:
+            k_val = int(self.spin_k.get())
+        except ValueError:
+            k_val = 5
+        win_size = 5 if self.combo_win.get() == &quot;5x5&quot; else 3
+
+        if &quot;k-NN&quot; in mode:
+            # Варіант 18: фільтрація оператором k найближчих сусідів
+            filtered = filter_knn(arr, k=k_val, win_size=win_size)
+        else:
+            filtered = arr
+
+        self.processed_image = filtered
+        self._display_preview(filtered)
+        self._draw_histogram(filtered)
+
+    def _display_preview(self, img_data: np.ndarray):
+        cw = self.preview_canvas.winfo_width()
+        ch = self.preview_canvas.winfo_height()
+        if cw &lt; 50 or ch &lt; 50:
+            cw, ch = 600, 560
+
+        ih, iw = img_data.shape[:2]
+        ratio = min(cw / iw, ch / ih, 1.0)
+        nw = max(1, int(iw * ratio))
+        nh = max(1, int(ih * ratio))
+
+        pil_img = Image.fromarray(img_data)
+        if ratio &lt; 1.0 or ratio &gt; 1.0:
+            pil_img = pil_img.resize((nw, nh), Image.Resampling.BILINEAR)
+
+        self.tk_preview = ImageTk.PhotoImage(pil_img)
+        self.preview_canvas.delete(&quot;all&quot;)
+        self.preview_canvas.create_image(cw // 2, ch // 2, image=self.tk_preview, anchor=tk.CENTER)
+
+    def _draw_histogram(self, img_data: np.ndarray):
+        self.hist_canvas.delete(&quot;all&quot;)
+        hw = self.hist_canvas.winfo_width()
+        hh = self.hist_canvas.winfo_height()
+        if hw &lt; 20 or hh &lt; 20:
+            hw, hh = 280, 65
+
+        # Обчислення 64 бінів для швидкого малювання
+        if img_data.ndim == 3 and img_data.shape[2] &gt;= 3:
+            gray = (0.299 * img_data[:, :, 0] + 0.587 * img_data[:, :, 1] + 0.114 * img_data[:, :, 2]).astype(np.uint8)
+        else:
+            gray = img_data
+
+        counts, _ = np.histogram(gray, bins=64, range=(0, 256))
+        max_c = np.max(counts) if np.max(counts) &gt; 0 else 1
+
+        bar_w = hw / 64.0
+        for i in range(64):
+            bar_h = (counts[i] / max_c) * (hh - 4)
+            x1 = i * bar_w
+            y1 = hh - bar_h
+            x2 = x1 + bar_w
+            y2 = hh
+            self.hist_canvas.create_rectangle(x1, y1, x2, y2, fill=&quot;#e0e0e0&quot;, outline=&quot;&quot;)
+
+    def save_image(self):
+        if self.processed_image is None:
+            messagebox.showwarning(&quot;Увага&quot;, &quot;Немає зображення для збереження!&quot;)
+            return
+        out_path = filedialog.asksaveasfilename(
+            defaultextension=&quot;.png&quot;,
+            filetypes=[(&quot;PNG&quot;, &quot;*.png&quot;), (&quot;BMP&quot;, &quot;*.bmp&quot;), (&quot;JPEG&quot;, &quot;*.jpg&quot;), (&quot;Усі файли&quot;, &quot;*.*&quot;)]
+        )
+        if out_path:
+            try:
+                imsave(out_path, self.processed_image)
+                messagebox.showinfo(&quot;Успіх&quot;, f&quot;Зображення збережено:\n{out_path}&quot;)
+            except Exception as e:
+                messagebox.showerror(&quot;Помилка&quot;, f&quot;Не вдалося зберегти файл:\n{e}&quot;)
+
+    def _dummy_action(self):
+        pass
+
+
+if __name__ == &quot;__main__&quot;:
+    root = tk.Tk()
+    app = AppLab5(root)
+    root.mainloop()
+</code></pre>
+        </section>
+
+        <!-- 7. СКРІНШОТИ РЕЗУЛЬТАТІВ -->
+        <section id="screenshots">
+            <h1>7. Скріншоти результатів виконання програми</h1>
+
+            <p>Рис. 1. Головне вікно редактора зображень Image Editor з панеллю повзунків та динамічною гістограмою</p>
+            <img src="screen1.png" alt="Головне вікно редактора">
+
+            <p>Рис. 2. Регулювання колірних характеристик повзунками (Red = 1.4, Contrast = 1.5, Overall Balance = 1.1)</p>
+            <img src="screen2.png" alt="Регулювання повзунками">
+
+            <p>Рис. 3. Застосування нелінійного просторового фільтра за варіантом 18 — Оператор k найближчих сусідів (k = 5, вікно 3x3)</p>
+            <img src="screen3.png" alt="Фільтр k-NN варіант 18">
+
+            <p>Рис. 4. Адаптивна просторова фільтрація k-NN зі збільшеною апертурою вікна 5x5 та параметром k = 15</p>
+            <img src="screen4.png" alt="Фільтрація k-NN вікно 5x5">
+
+            <p>Рис. 5. Комплексна обробка зображення: комбінування фільтрації k-NN (k = 7, вікно 3x3) із корекцією контрастності (Contrast = 1.35)</p>
+            <img src="screen5.png" alt="Комплексна обробка зображення">
+        </section>
+
+        <!-- 8. ВИСНОВКИ -->
+        <section id="conclusions">
+            <h1>8. Висновки</h1>
+            <p>Під час виконання лабораторної роботи було створено повноцінний графічний редактор зображень Image Editor на мові Python з реалізацією алгоритму просторової фільтрації за індивідуальним варіантом 18 — оператор k найближчих сусідів (k-NN filter).</p>
+            <p>У ході роботи розроблено зручний графічний інтерфейс користувача з інтерактивними повзунками керування загальним балансом яскравості, колірними компонентами R, G, B, контрастністю та прозорістю з динамічним оновленням гістограми в реальному часі. Реалізовано алгоритм фільтрації k-NN, який забезпечує ефективне згладжування флуктуацій яскравості та придушення шуму без деградації контурів об'єктів завдяки селективному відбору k найбільш схожих сусідів.</p>
+        </section>
+
+    </div>
+
+</body>
+</html>
