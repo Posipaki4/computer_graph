@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звіт з лабораторної роботи — Об'єднання зображень, водяний знак та слайд-шоу</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292f;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        /* Навігація / Зміст */
+        nav {
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        nav a {
+            color: #0969da;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Секції */
+        section {
+            margin-bottom: 3rem;
+            padding-top: 1rem;
+        }
+
+        h1, h2, h3, h4 {
+            color: #1F2328;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.35rem;
+            border-bottom: 1px solid #d0d7de;
+            padding-bottom: 0.3rem;
+            margin-top: 2rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        p, li {
+            font-size: 0.95rem;
+            color: #1F2328;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        .title-block {
+            text-align: center;
+            border: 1px solid #d0d7de;
+            padding: 2.5rem 1.5rem;
+            border-radius: 6px;
+            background-color: #f6f8fa;
+            margin-bottom: 2.5rem;
+        }
+
+        .title-block h1 {
+            border: none;
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .title-block .meta-info {
+            display: flex;
+            justify-content: space-between;
+            text-align: left;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        /* Лістинг коду */
+        pre {
+            background-color: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.85rem;
+            line-height: 1.45;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            margin: 0.5rem 0 1.5rem 0;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .title-block .meta-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <nav>
+            <ul>
+                <li><a href="#title">Титульний лист</a></li>
+                <li><a href="#task">Завдання</a></li>
+                <li><a href="#description">Хід работы</a></li>
+                <li><a href="#code">Код програми</a></li>
+                <li><a href="#screenshots">Скріншоти</a></li>
+                <li><a href="#conclusions">Висновки</a></li>
+            </ul>
+        </nav>
+
+        <!-- 1. ТИТУЛЬНИЙ ЛИСТ -->
+        <section id="title">
+            <div class="title-block">
+                <p>ЗВІТ</p>
+                <h1>з лабораторної роботи з дисципліни<br>«Комп'ютерна графіка та візуалізація»</h1>
+                <p>Тема: розробка програмного забезпечення для обробки зображень: об'єднання зображень, створення водяного знаку та слайд-шоу.</p>
+
+                <div class="meta-info">
+                    <div>
+                        Виконав:<br>
+                        Студент гр. ІПЗ-24.10<br>
+                        Пастух С. І.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ЛИСТ ЗАВДАННЯ -->
+        <section id="task">
+            <h1>1. Лист завдання</h1>
+            <p>Тема: розробка програмного забезпечення для обробки зображень: об'єднання зображень, створення водяного знаку та слайд-шоу.</p>
+            <p>Мета: ознайомитися з методами обробки зображень для об'єднання двох зображень, додавання напівпрозорого водяного знаку та створення слайд-шоу; отримати практичний досвід у налаштуванні параметрів текстових елементів і автоматизації послідовного відображення зображень у Python.</p>
+            
+            <h3>Перелік завдань:</h3>
+            <ol>
+                <li>Розробити графічний інтерфейс користувача з вкладками для доступу до функцій об'єднання, водяного знаку та слайд-шоу.</li>
+                <li>Реалізувати об'єднання двох зображень по горизонталі (із попереднім вирівнюванням за висотою) та по вертикалі (із вирівнюванням за шириною).</li>
+                <li>Реалізувати накладання текстового водяного знаку з можливістю налаштування тексту, розміщення на зображенні, розміру шрифту, кольору RGB та рівня прозорості.</li>
+                <li>Реалізувати програвач слайд-шоу для послідовного відтворення зображень із можливістю вибору папки або списку файлів, налаштуванням затримки таймера та кнопками керування (старт, пауза, стоп, навігація).</li>
+                <li>Забезпечити попередній перегляд результатів у графічному інтерфейсі та можливість збереження оброблених файлів.</li>
+            </ol>
+        </section>
+
+        <!-- 3. ОПИС ХОДУ ВИКОНАННЯ ЗАВДАНЬ -->
+        <section id="description">
+            <h1>2. Опис ходу виконання завдань</h1>
+
+            <h3>Хід розробки та функціональні блоки:</h3>
+            <ol>
+                <li>merge_images — функція зшивання двох зображень: приводить колірні канали до RGB, масштабує менше зображення за спільною стороною (висотою або шириною) та об'єднує їх за допомогою np.concatenate.</li>
+                <li>add_watermark — функція накладання водяного знаку: розраховує координати тексту через textbbox, рендерить текст із заданим кольором і прозорістю на окремому RGBA шарі за допомогою PIL та накладає його через Image.alpha_composite.</li>
+                <li>show_and_save_gui — функція виведення зображення у вікно попереднього перегляду через Matplotlib та виклику діалогу збереження файлу.</li>
+                <li>AppLab3._slideshow_tick — циклічний обробник таймера слайд-шоу: перемикає індекс слайду, викликає перемальовування полотна та планує наступне спрацювання через метод root.after().</li>
+                <li>AppLab3 — клас графічного інтерфейсу на Tkinter: реалізує вкладки вибору параметрів, діалоги вибору папок і списків файлів та інтерактивні кнопки керування відтворенням.</li>
+            </ol>
+
+            <h3>Використані бібліотеки та модулі:</h3>
+            <ol>
+                <li>tkinter / ttk — побудова графічного інтерфейсу (вікно програми, вкладки Notebook, випадаючі списки Combobox, кнопки, поля введення, повзунки).</li>
+                <li>filedialog / messagebox — вибір файлів, множинний вибір та вибір папок у системному провіднику, виведення модальних повідомлень.</li>
+                <li>numpy — векторна обробка числових масивів пікселів та операції конкатенації вздовж осей (axis=0, axis=1).</li>
+                <li>PIL (Pillow) — рендеринг векторного шрифту TrueType (ImageFont), малювання тексту (ImageDraw) та альфа-композиція шарів (alpha_composite).</li>
+                <li>skimage (scikit-image) — зчитування зображень з диска (imread), якісне масштабування зі збереженням пропорцій (resize) та збереження (imsave).</li>
+                <li>matplotlib — виведення зображень і слайдів на полотно всередині віджета Tkinter.</li>
+            </ol>
+        </section>
+
+        <!-- 4. ЛІСТИНГ ПРОГРАМИ -->
+        <section id="code">
+            <h1>3. Лістинг програми</h1>
+            <pre><code>import os
+import glob
+import tkinter as tk
+from tkinter import ttk, filedialog, messagebox
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from skimage.io import imread, imsave
+from skimage.transform import resize
+
+def show_and_save_gui(image_array: np.ndarray, file_name: str, canvas_frame, info_label, save: bool = True):
+    for widget in canvas_frame.winfo_children():
+        widget.destroy()
+
+    fig, ax = plt.subplots(figsize=(5, 4))
+    if image_array.ndim == 2:
+        ax.imshow(image_array, cmap=&quot;gray&quot;)
+    else:
+        ax.imshow(image_array)
+    ax.axis(&quot;off&quot;)
+    ax.set_title(&quot;Preview&quot;)
+
+    canvas = FigureCanvasTkAgg(fig, master=canvas_frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+    plt.close(fig)
+
+    info_label.config(text=f&quot;Shape: {image_array.shape} | Total elements: {image_array.size}&quot;)
+
+    if save and file_name:
+        if messagebox.askyesno(&quot;Save Image&quot;, f&quot;Save image as:\n{file_name}?&quot;):
+            try:
+                if image_array.ndim == 3 and image_array.shape[2] == 4 and not file_name.lower().endswith((&quot;.png&quot;, &quot;.tiff&quot;, &quot;.tif&quot;)):
+                    file_name = file_name.rsplit(&quot;.&quot;, 1)[0] + &quot;.png&quot;
+                imsave(file_name, image_array)
+                messagebox.showinfo(&quot;Success&quot;, f&quot;Saved as: {file_name}&quot;)
+            except Exception as e:
+                messagebox.showerror(&quot;Error&quot;, f&quot;Failed to save image:\n{e}&quot;)
+
+def merge_images(img1_path: str, img2_path: str, direction: str, canvas_frame, info_label):
+
+    img1 = imread(img1_path)
+    img2 = imread(img2_path)
+
+    def to_rgb(im):
+        if im.ndim == 2:
+            return np.stack([im, im, im], axis=-1)
+        elif im.ndim == 3 and im.shape[2] == 4:
+            return im[:, :, :3]
+        return im[:, :, :3]
+
+    rgb1 = to_rgb(img1)
+    rgb2 = to_rgb(img2)
+
+    h1, w1 = rgb1.shape[:2]
+    h2, w2 = rgb2.shape[:2]
+
+    if direction == &quot;horizontal&quot;:
+        target_h = max(h1, h2)
+
+        w1_new = int(round(w1 * (target_h / h1)))
+        w2_new = int(round(w2 * (target_h / h2)))
+        r1 = resize(rgb1, (target_h, w1_new), preserve_range=True, anti_aliasing=True).astype(np.uint8)
+        r2 = resize(rgb2, (target_h, w2_new), preserve_range=True, anti_aliasing=True).astype(np.uint8)
+        merged = np.concatenate([r1, r2], axis=1)
+    else:            
+        target_w = max(w1, w2)
+
+        h1_new = int(round(h1 * (target_w / w1)))
+        h2_new = int(round(h2 * (target_w / w2)))
+        r1 = resize(rgb1, (h1_new, target_w), preserve_range=True, anti_aliasing=True).astype(np.uint8)
+        r2 = resize(rgb2, (h2_new, target_w), preserve_range=True, anti_aliasing=True).astype(np.uint8)
+        merged = np.concatenate([r1, r2], axis=0)
+
+    base_name = img1_path.rsplit(&quot;.&quot;, 1)[0]
+    ext = img1_path.rsplit(&quot;.&quot;, 1)[1]
+    new_file_name = f&quot;{base_name}_merged_{direction}.{ext}&quot;
+
+    show_and_save_gui(merged, new_file_name, canvas_frame, info_label)
+
+def add_watermark(image_name: str, text: str, position_name: str, custom_x: int, custom_y: int,
+                  font_size: int, color_rgb: tuple, alpha: float, canvas_frame, info_label):
+
+    base_img = Image.open(image_name).convert(&quot;RGBA&quot;)
+    w, h = base_img.size
+
+    watermark_layer = Image.new(&quot;RGBA&quot;, (w, h), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(watermark_layer)
+
+    try:
+        font = ImageFont.truetype(&quot;arial.ttf&quot;, font_size)
+    except IOError:
+        try:
+            font = ImageFont.truetype(&quot;DejaVuSans.ttf&quot;, font_size)
+        except IOError:
+            font = ImageFont.load_default()
+
+    bbox = draw.textbbox((0, 0), text, font=font)
+    text_w = bbox[2] - bbox[0]
+    text_h = bbox[3] - bbox[1]
+
+    margin = 20
+    if position_name == &quot;Верхній лівий&quot;:
+        pos = (margin, margin)
+    elif position_name == &quot;Верхній правий&quot;:
+        pos = (w - text_w - margin, margin)
+    elif position_name == &quot;Нижній лівий&quot;:
+        pos = (margin, h - text_h - margin)
+    elif position_name == &quot;Нижній правий&quot;:
+        pos = (w - text_w - margin, h - text_h - margin)
+    elif position_name == &quot;Центр&quot;:
+        pos = ((w - text_w) // 2, (h - text_h) // 2)
+    else:                 
+        pos = (custom_x, custom_y)
+
+    alpha_byte = int(np.clip(alpha, 0.0, 1.0) * 255)
+    text_color = (color_rgb[0], color_rgb[1], color_rgb[2], alpha_byte)
+
+    draw.text(pos, text, font=font, fill=text_color)
+
+    watermarked = Image.alpha_composite(base_img, watermark_layer)
+    result_array = np.array(watermarked)
+
+    base_name = image_name.rsplit(&quot;.&quot;, 1)[0]
+    new_file_name = f&quot;{base_name}_watermark.png&quot;
+
+    show_and_save_gui(result_array, new_file_name, canvas_frame, info_label)
+
+class AppLab3:
+    def __init__(self, root):
+        self.root = root
+        self.root.title(&quot;Лабораторна робота №3 — Об&#x27;єднання, водяний знак та слайд-шоу&quot;)
+        self.root.geometry(&quot;1020x700&quot;)
+
+        self.image_path = &quot;&quot;
+        self.second_image_path = &quot;&quot;
+
+        self.slideshow_images = []
+        self.current_slide_idx = 0
+        self.is_slideshow_running = False
+        self.slideshow_timer_id = None
+
+        file_frame = ttk.Frame(root, padding=10)
+        file_frame.pack(fill=tk.X)
+
+        ttk.Button(file_frame, text=&quot;Вибрати головне зображення&quot;, command=self.select_file).pack(side=tk.LEFT)
+        self.lbl_file = ttk.Label(file_frame, text=&quot;Файл не вибрано&quot;, padding=(10, 0))
+        self.lbl_file.pack(side=tk.LEFT, fill=tk.X, expand=True)
+
+        main_frame = ttk.Frame(root, padding=10)
+        main_frame.pack(fill=tk.BOTH, expand=True)
+
+        self.notebook = ttk.Notebook(main_frame)
+        self.notebook.pack(side=tk.LEFT, fill=tk.BOTH, padx=(0, 10), expand=False)
+
+        preview_frame = ttk.LabelFrame(main_frame, text=&quot;Попередній перегляд / Відтворення&quot;, padding=10)
+        preview_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+        self.lbl_info = ttk.Label(preview_frame, text=&quot;&quot;)
+        self.lbl_info.pack(anchor=tk.W, pady=(0, 5))
+
+        self.canvas_frame = ttk.Frame(preview_frame)
+        self.canvas_frame.pack(fill=tk.BOTH, expand=True)
+
+        self._init_merge_tab()
+        self._init_watermark_tab()
+        self._init_slideshow_tab()
+
+    def select_file(self):
+        path = filedialog.askopenfilename(
+            filetypes=[(&quot;Image files&quot;, &quot;*.jpg *.jpeg *.png *.bmp *.tiff *.gif&quot;), (&quot;All files&quot;, &quot;*.*&quot;)]
+        )
+        if path:
+            try:
+                self.image_path = path
+                self.lbl_file.config(text=path)
+                image_array = imread(path)
+                show_and_save_gui(image_array, path, self.canvas_frame, self.lbl_info, save=False)
+            except Exception as e:
+                messagebox.showerror(&quot;Помилка&quot;, f&quot;Не вдалося відкрити зображення:\n{e}&quot;)
+
+    def _check_file(self):
+        if not self.image_path:
+            messagebox.showerror(&quot;Помилка&quot;, &quot;Спочатку оберіть головне зображення!&quot;)
+            return False
+        return True
+
+    def _init_merge_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;1. Об&#x27;єднання&quot;)
+
+        ttk.Label(tab, text=&quot;Друге зображення:&quot;).pack(anchor=tk.W, pady=2)
+        ttk.Button(tab, text=&quot;Обрати друге зображення...&quot;, command=self._select_second_image).pack(fill=tk.X, pady=5)
+        self.lbl_second = ttk.Label(tab, text=&quot;Не обрано&quot;, foreground=&quot;gray&quot;)
+        self.lbl_second.pack(anchor=tk.W, pady=2)
+
+        ttk.Separator(tab, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=10)
+
+        ttk.Label(tab, text=&quot;Напрямок об&#x27;єднання:&quot;).pack(anchor=tk.W, pady=2)
+        self.combo_dir = ttk.Combobox(tab, values=[&quot;Горизонтально&quot;, &quot;Вертикально&quot;], state=&quot;readonly&quot;)
+        self.combo_dir.current(0)
+        self.combo_dir.pack(fill=tk.X, pady=5)
+
+        ttk.Button(tab, text=&quot;Об&#x27;єднати зображення&quot;, command=self._run_merge).pack(pady=15, fill=tk.X)
+
+    def _select_second_image(self):
+        path = filedialog.askopenfilename(
+            filetypes=[(&quot;Image files&quot;, &quot;*.jpg *.jpeg *.png *.bmp *.tiff *.gif&quot;), (&quot;All files&quot;, &quot;*.*&quot;)]
+        )
+        if path:
+            self.second_image_path = path
+            self.lbl_second.config(text=os.path.basename(path), foreground=&quot;black&quot;)
+
+    def _run_merge(self):
+        if not self._check_file(): return
+        if not self.second_image_path:
+            messagebox.showerror(&quot;Помилка&quot;, &quot;Будь ласка, оберіть друге зображення для об&#x27;єднання!&quot;)
+            return
+        direction = &quot;horizontal&quot; if self.combo_dir.get() == &quot;Горизонтально&quot; else &quot;vertical&quot;
+        merge_images(self.image_path, self.second_image_path, direction, self.canvas_frame, self.lbl_info)
+
+    def _init_watermark_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;2. Водяний знак&quot;)
+
+        ttk.Label(tab, text=&quot;Текст водяного знаку:&quot;).pack(anchor=tk.W, pady=2)
+        self.ent_wm_text = ttk.Entry(tab)
+        self.ent_wm_text.insert(0, &quot;© Confidential 2026&quot;)
+        self.ent_wm_text.pack(fill=tk.X, pady=5)
+
+        ttk.Label(tab, text=&quot;Розташування:&quot;).pack(anchor=tk.W, pady=2)
+        self.combo_pos = ttk.Combobox(tab, values=[&quot;Нижній правий&quot;, &quot;Нижній лівий&quot;, &quot;Верхній правий&quot;, &quot;Верхній лівий&quot;, &quot;Центр&quot;, &quot;Користувацька (X, Y)&quot;], state=&quot;readonly&quot;)
+        self.combo_pos.current(0)
+        self.combo_pos.pack(fill=tk.X, pady=5)
+
+        coord_frame = ttk.Frame(tab)
+        coord_frame.pack(fill=tk.X, pady=2)
+        ttk.Label(coord_frame, text=&quot;X:&quot;).pack(side=tk.LEFT)
+        self.ent_wm_x = ttk.Entry(coord_frame, width=6)
+        self.ent_wm_x.insert(0, &quot;50&quot;)
+        self.ent_wm_x.pack(side=tk.LEFT, padx=5)
+
+        ttk.Label(coord_frame, text=&quot;Y:&quot;).pack(side=tk.LEFT)
+        self.ent_wm_y = ttk.Entry(coord_frame, width=6)
+        self.ent_wm_y.insert(0, &quot;50&quot;)
+        self.ent_wm_y.pack(side=tk.LEFT, padx=5)
+
+        ttk.Label(tab, text=&quot;Розмір шрифту:&quot;).pack(anchor=tk.W, pady=2)
+        self.ent_wm_size = ttk.Entry(tab)
+        self.ent_wm_size.insert(0, &quot;36&quot;)
+        self.ent_wm_size.pack(fill=tk.X, pady=2)
+
+        ttk.Label(tab, text=&quot;Колір (R G B, наприклад: 255 255 255):&quot;).pack(anchor=tk.W, pady=2)
+        self.ent_wm_color = ttk.Entry(tab)
+        self.ent_wm_color.insert(0, &quot;255 255 255&quot;)
+        self.ent_wm_color.pack(fill=tk.X, pady=2)
+
+        ttk.Label(tab, text=&quot;Прозорість тексту (0.1 - 1.0):&quot;).pack(anchor=tk.W, pady=2)
+        self.scale_wm_alpha = ttk.Scale(tab, from_=0.1, to=1.0, value=0.6)
+        self.scale_wm_alpha.pack(fill=tk.X, pady=2)
+
+        self.ent_wm_alpha = ttk.Entry(tab)
+        self.ent_wm_alpha.insert(0, &quot;0.6&quot;)
+        self.ent_wm_alpha.pack(fill=tk.X, pady=2)
+
+        def sync_alpha(val):
+            self.ent_wm_alpha.delete(0, tk.END)
+            self.ent_wm_alpha.insert(0, f&quot;{float(val):.2f}&quot;)
+        self.scale_wm_alpha.config(command=sync_alpha)
+
+        ttk.Button(tab, text=&quot;Накласти водяний знак&quot;, command=self._run_watermark).pack(pady=15, fill=tk.X)
+
+    def _run_watermark(self):
+        if not self._check_file(): return
+        text = self.ent_wm_text.get().strip()
+        if not text:
+            messagebox.showerror(&quot;Помилка&quot;, &quot;Введіть текст водяного знаку!&quot;)
+            return
+        try:
+            pos_name = self.combo_pos.get()
+            x = int(self.ent_wm_x.get())
+            y = int(self.ent_wm_y.get())
+            fsize = int(self.ent_wm_size.get())
+            color_parts = [int(v) for v in self.ent_wm_color.get().split()]
+            if len(color_parts) != 3: raise ValueError(&quot;Color must have 3 integers&quot;)
+            color_rgb = tuple(color_parts)
+            alpha = float(self.ent_wm_alpha.get())
+        except Exception as e:
+            messagebox.showerror(&quot;Помилка&quot;, f&quot;Некоректні параметри водяного знаку:\n{e}&quot;)
+            return
+
+        add_watermark(self.image_path, text, pos_name, x, y, fsize, color_rgb, alpha, self.canvas_frame, self.lbl_info)
+
+    def _init_slideshow_tab(self):
+        tab = ttk.Frame(self.notebook, padding=10)
+        self.notebook.add(tab, text=&quot;3. Слайд-шоу&quot;)
+
+        ttk.Button(tab, text=&quot;Вибрати папку із зображеннями...&quot;, command=self._select_slideshow_folder).pack(fill=tk.X, pady=3)
+        ttk.Button(tab, text=&quot;Вибрати список файлів...&quot;, command=self._select_slideshow_files).pack(fill=tk.X, pady=3)
+
+        self.lbl_slides_count = ttk.Label(tab, text=&quot;Слайдів завантажено: 0&quot;, font=(&quot;Arial&quot;, 9, &quot;bold&quot;))
+        self.lbl_slides_count.pack(anchor=tk.W, pady=5)
+
+        ttk.Separator(tab, orient=tk.HORIZONTAL).pack(fill=tk.X, pady=5)
+
+        ttk.Label(tab, text=&quot;Затримка між слайдами (секунд):&quot;).pack(anchor=tk.W, pady=2)
+        self.ent_delay = ttk.Entry(tab)
+        self.ent_delay.insert(0, &quot;1.5&quot;)
+        self.ent_delay.pack(fill=tk.X, pady=2)
+
+        self.var_loop = tk.BooleanVar(value=True)
+        ttk.Checkbutton(tab, text=&quot;Циклічне відтворення&quot;, variable=self.var_loop).pack(anchor=tk.W, pady=5)
+
+        btn_frame = ttk.LabelFrame(tab, text=&quot;Керування програвачем&quot;, padding=5)
+        btn_frame.pack(fill=tk.X, pady=10)
+
+        r1 = ttk.Frame(btn_frame)
+        r1.pack(fill=tk.X, pady=2)
+        self.btn_play = ttk.Button(r1, text=&quot;▶ Старт&quot;, command=self._start_slideshow)
+        self.btn_play.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+
+        self.btn_pause = ttk.Button(r1, text=&quot;⏸ Пауза&quot;, command=self._pause_slideshow)
+        self.btn_pause.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+
+        self.btn_stop = ttk.Button(r1, text=&quot;⏹ Зупинити&quot;, command=self._stop_slideshow)
+        self.btn_stop.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+
+        r2 = ttk.Frame(btn_frame)
+        r2.pack(fill=tk.X, pady=4)
+        ttk.Button(r2, text=&quot;⏮ Попередній&quot;, command=self._prev_slide).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+        ttk.Button(r2, text=&quot;⏭ Наступний&quot;, command=self._next_slide).pack(side=tk.LEFT, fill=tk.X, expand=True, padx=2)
+
+    def _select_slideshow_folder(self):
+        folder = filedialog.askdirectory()
+        if folder:
+            valid_exts = (&quot;*.jpg&quot;, &quot;*.jpeg&quot;, &quot;*.png&quot;, &quot;*.bmp&quot;, &quot;*.tiff&quot;)
+            files = []
+            for ext in valid_exts:
+                files.extend(glob.glob(os.path.join(folder, ext)))
+                files.extend(glob.glob(os.path.join(folder, ext.upper())))
+            self.slideshow_images = sorted(list(set(files)))
+            self.current_slide_idx = 0
+            self.lbl_slides_count.config(text=f&quot;Слайдів завантажено: {len(self.slideshow_images)}&quot;)
+            if self.slideshow_images:
+                self._display_current_slide()
+
+    def _select_slideshow_files(self):
+        files = filedialog.askopenfilenames(
+            filetypes=[(&quot;Image files&quot;, &quot;*.jpg *.jpeg *.png *.bmp *.tiff *.gif&quot;), (&quot;All files&quot;, &quot;*.*&quot;)]
+        )
+        if files:
+            self.slideshow_images = list(files)
+            self.current_slide_idx = 0
+            self.lbl_slides_count.config(text=f&quot;Слайдів завантажено: {len(self.slideshow_images)}&quot;)
+            self._display_current_slide()
+
+    def _display_current_slide(self):
+        if not self.slideshow_images: return
+        self.current_slide_idx %= len(self.slideshow_images)
+        path = self.slideshow_images[self.current_slide_idx]
+        try:
+            arr = imread(path)
+            for widget in self.canvas_frame.winfo_children():
+                widget.destroy()
+
+            fig, ax = plt.subplots(figsize=(5, 4))
+            if arr.ndim == 2:
+                ax.imshow(arr, cmap=&quot;gray&quot;)
+            else:
+                ax.imshow(arr)
+            ax.axis(&quot;off&quot;)
+            ax.set_title(f&quot;Слайд {self.current_slide_idx + 1} з {len(self.slideshow_images)}:\n{os.path.basename(path)}&quot;, fontsize=10)
+
+            canvas = FigureCanvasTkAgg(fig, master=self.canvas_frame)
+            canvas.draw()
+            canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
+            plt.close(fig)
+
+            self.lbl_info.config(text=f&quot;Слайд: {self.current_slide_idx + 1}/{len(self.slideshow_images)} | Розмір: {arr.shape} | Файл: {os.path.basename(path)}&quot;)
+        except Exception as e:
+            print(&quot;Slide display error:&quot;, e)
+
+    def _slideshow_tick(self):
+        if not self.is_slideshow_running or not self.slideshow_images:
+            return
+
+        self.current_slide_idx += 1
+        if self.current_slide_idx &gt;= len(self.slideshow_images):
+            if self.var_loop.get():
+                self.current_slide_idx = 0
+            else:
+                self._stop_slideshow()
+                return
+
+        self._display_current_slide()
+
+        try:
+            delay_sec = max(0.2, float(self.ent_delay.get()))
+        except ValueError:
+            delay_sec = 1.0
+
+        self.slideshow_timer_id = self.root.after(int(delay_sec * 1000), self._slideshow_tick)
+
+    def _start_slideshow(self):
+        if not self.slideshow_images:
+            messagebox.showwarning(&quot;Увага&quot;, &quot;Спочатку оберіть папку або файли для слайд-шоу!&quot;)
+            return
+        if self.is_slideshow_running:
+            return
+        self.is_slideshow_running = True
+        self._display_current_slide()
+        try:
+            delay_sec = max(0.2, float(self.ent_delay.get()))
+        except ValueError:
+            delay_sec = 1.0
+        self.slideshow_timer_id = self.root.after(int(delay_sec * 1000), self._slideshow_tick)
+
+    def _pause_slideshow(self):
+        self.is_slideshow_running = False
+        if self.slideshow_timer_id:
+            self.root.after_cancel(self.slideshow_timer_id)
+            self.slideshow_timer_id = None
+
+    def _stop_slideshow(self):
+        self._pause_slideshow()
+        self.current_slide_idx = 0
+        if self.slideshow_images:
+            self._display_current_slide()
+
+    def _next_slide(self):
+        if not self.slideshow_images: return
+        self.current_slide_idx = (self.current_slide_idx + 1) % len(self.slideshow_images)
+        self._display_current_slide()
+
+    def _prev_slide(self):
+        if not self.slideshow_images: return
+        self.current_slide_idx = (self.current_slide_idx - 1) % len(self.slideshow_images)
+        self._display_current_slide()
+
+if __name__ == &quot;__main__&quot;:
+    root = tk.Tk()
+    app = AppLab3(root)
+    root.mainloop()</code></pre>
+        </section>
+
+        <!-- 5. СКРІНШОТИ РЕЗУЛЬТАТІВ -->
+        <section id="screenshots">
+            <h1>4. Результати виконання роботи</h1>
+
+            <p>Рис. 1. Головне вікно програми після вибору вхідного зображення</p>
+            <img src="screen1.png" alt="Головне вікно">
+
+            <p>Рис. 2. Горизонтальне об'єднання двох зображень (вкладка «1. Об'єднання»)</p>
+            <img src="screen2.png" alt="Горизонтальне об'єднання">
+
+            <p>Рис. 3. Вертикальне об'єднання двох зображень (вкладка «1. Об'єднання»)</p>
+            <img src="screen3.png" alt="Вертикальне об'єднання">
+
+            <p>Рис. 4. Накладання текстового водяного знаку в нижній правий кут (вкладка «2. Водяний знак»)</p>
+            <img src="screen4.png" alt="Водяний знак у кутку">
+
+            <p>Рис. 5. Накладання напівпрозорого водяного знаку по центру (вкладка «2. Водяний знак»)</p>
+            <img src="screen5.png" alt="Водяний знак по центру">
+
+            <p>Рис. 6. Програвач слайд-шоу під час відтворення слайдів (вкладка «3. Слайд-шоу»)</p>
+            <img src="screen6.png" alt="Слайд-шоу">
+
+            <p>Рис. 7. Діалогове вікно підтвердження збереження обробленого файлу</p>
+            <img src="screen7.png" alt="Збереження файлу">
+        </section>
+
+        <!-- 6. ВИСНОВКИ -->
+        <section id="conclusions">
+            <h1>5. Висновки</h1>
+            <p>Під час виконання лабораторної роботи було створено програму на мові Python для об'єднання зображень, додавання водяного знаку та відтворення слайд-шоу.</p>
+            <p>У ході роботи реалізовано графічний інтерфейс із використанням бібліотеки tkinter, розроблено алгоритми горизонтального та вертикального зшивання зображень із пропорційним автовирівнюванням габаритів за допомогою NumPy та scikit-image, побудовано інструмент накладання напівпрозорого тексту за допомогою Pillow, а також створено таймерний програвач слайдів із підтримкою циклічного перегляду.</p>
+        </section>
+
+    </div>
+
+</body>
+</html>
